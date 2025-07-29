@@ -1,0 +1,244 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User Management
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  role          UserRole  @default(MEMBER)
+  avatar        String?
+  bio           String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  sessions      Session[]
+  posts         Post[]
+  eventRegistrations EventRegistration[]
+  teamMember    TeamMember?
+  pageViews     PageView[]
+
+  @@map("users")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+// Events & Registration
+model Event {
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  date        DateTime
+  time        String
+  location    String
+  capacity    Int?
+  status      EventStatus @default(UPCOMING)
+  category    String
+  attendees   Int       @default(0)
+  image       String?
+  registrationUrl String? // Google Form or registration link
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relations
+  registrations EventRegistration[]
+  analytics     EventAnalytics[]
+
+  @@map("events")
+}
+
+model EventRegistration {
+  id        String   @id @default(cuid())
+  eventId   String
+  userId    String
+  status    RegistrationStatus @default(REGISTERED)
+  registeredAt DateTime @default(now())
+  
+  // Relations
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, userId])
+  @@map("event_registrations")
+}
+
+// Content Management
+model Post {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  slug      String   @unique
+  published Boolean  @default(false)
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@map("posts")
+}
+
+model Page {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  slug      String   @unique
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("pages")
+}
+
+// Timeline & Projects
+model TimelineItem {
+  id          String        @id @default(cuid())
+  title       String
+  description String
+  status      TimelineStatus @default(PENDING)
+  dueDate     DateTime?
+  completedAt DateTime?
+  order       Int
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // Relations
+  tasks       TimelineTask[]
+
+  @@map("timeline_items")
+}
+
+model TimelineTask {
+  id            String        @id @default(cuid())
+  timelineItemId String
+  description   String
+  status        TimelineStatus @default(PENDING)
+  order         Int
+  createdAt     DateTime      @default(now())
+
+  // Relations
+  timelineItem  TimelineItem  @relation(fields: [timelineItemId], references: [id], onDelete: Cascade)
+
+  @@map("timeline_tasks")
+}
+
+model Project {
+  id          String      @id @default(cuid())
+  name        String
+  description String
+  status      ProjectStatus @default(PLANNING)
+  teamId      String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@map("projects")
+}
+
+// Team Management
+model TeamMember {
+  id           String   @id @default(cuid())
+  userId       String   @unique
+  role         String
+  department   String
+  bio          String?
+  linkedin     String?
+  twitter      String?
+  email        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("team_members")
+}
+
+model Department {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("departments")
+}
+
+// Analytics
+model PageView {
+  id        String   @id @default(cuid())
+  page      String
+  userId    String?
+  timestamp DateTime @default(now())
+
+  // Relations
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@map("page_views")
+}
+
+model EventAnalytics {
+  id            String   @id @default(cuid())
+  eventId       String
+  views         Int      @default(0)
+  registrations Int      @default(0)
+  attendance    Int      @default(0)
+  date          DateTime @default(now())
+
+  // Relations
+  event         Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@map("event_analytics")
+}
+
+// Enums
+enum UserRole {
+  ADMIN
+  MEMBER
+  GUEST
+}
+
+enum EventStatus {
+  UPCOMING
+  ONGOING
+  COMPLETED
+  CANCELLED
+}
+
+enum RegistrationStatus {
+  REGISTERED
+  ATTENDED
+  CANCELLED
+  WAITLISTED
+}
+
+enum TimelineStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum ProjectStatus {
+  PLANNING
+  IN_PROGRESS
+  COMPLETED
+  ON_HOLD
+}

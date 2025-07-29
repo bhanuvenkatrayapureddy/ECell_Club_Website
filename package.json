@@ -1,0 +1,54 @@
+{
+  "name": "ecell-website",
+  "version": "1.0.0",
+  "description": "E-Cell (Entrepreneurship Club) Website with Admin Dashboard",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "@supabase/supabase-js": "^2.53.0",
+    "@types/multer": "^2.0.0",
+    "autoprefixer": "^10.4.16",
+    "bcryptjs": "^2.4.3",
+    "date-fns": "^2.30.0",
+    "framer-motion": "^10.16.4",
+    "jsonwebtoken": "^9.0.2",
+    "lucide-react": "^0.292.0",
+    "multer": "^2.0.2",
+    "next": "^14.0.0",
+    "next-auth": "^4.24.4",
+    "postcss": "^8.4.31",
+    "prisma": "^5.22.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.47.0",
+    "react-hot-toast": "^2.4.1",
+    "react-icons": "^4.11.0",
+    "tailwindcss": "^3.3.0"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.5",
+    "@types/jsonwebtoken": "^9.0.4",
+    "@types/node": "^20.8.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "eslint": "^8.51.0",
+    "eslint-config-next": "^14.0.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.2.0"
+  },
+  "keywords": [
+    "ecell",
+    "entrepreneurship",
+    "college-club",
+    "website",
+    "admin-dashboard"
+  ],
+  "author": "E-Cell Team",
+  "license": "MIT"
+}
