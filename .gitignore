@@ -28,3 +28,5 @@ coverage/
 
 # Optional: local VSCode settings
 .vscode/
+
+.vercel
