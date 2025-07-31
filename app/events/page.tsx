@@ -96,12 +96,12 @@ export default function Events() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-black">
         <Header />
         <div className="flex items-center justify-center min-h-screen">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading events...</p>
+          <div className="text-center text-white">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto"></div>
+            <p className="mt-4 text-white/70">Loading events...</p>
           </div>
         </div>
       </div>
@@ -111,24 +111,27 @@ export default function Events() {
   const stats = getEventStats()
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-black">
       <Header />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-green-600 to-blue-600 text-white py-20">
-        <div className="container mx-auto px-4">
+      <section className="hero-gradient min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center"
+            className="text-center text-white"
           >
-            <Link href="/" className="inline-flex items-center text-white/80 hover:text-white mb-8 transition-colors">
+            <Link href="/" className="inline-flex items-center text-white/80 hover:text-white mb-8 transition-colors text-shadow">
               <ArrowLeft size={20} className="mr-2" />
               Back to Home
             </Link>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">Our Events</h1>
-            <p className="text-xl md:text-2xl max-w-3xl mx-auto opacity-90">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-shadow">
+              Our <span className="text-white neon-glow">Events</span>
+            </h1>
+            <p className="text-xl md:text-2xl max-w-3xl mx-auto text-white/90 text-shadow">
               Join us for exciting events that inspire, educate, and connect the entrepreneurial community
             </p>
           </motion.div>
@@ -136,7 +139,7 @@ export default function Events() {
       </section>
 
       {/* Event Stats */}
-      <section className="py-12 bg-white border-b">
+      <section className="py-12 bg-black/50 border-b border-white/10">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
@@ -152,8 +155,10 @@ export default function Events() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="text-center"
               >
-                <div className="text-2xl font-bold text-primary-600">{stat.value}</div>
-                <div className="text-sm text-gray-600">{stat.label}</div>
+                <div className="glass-card p-4">
+                  <div className="text-2xl font-bold text-white neon-glow">{stat.value}</div>
+                  <div className="text-sm text-white/70">{stat.label}</div>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -161,18 +166,18 @@ export default function Events() {
       </section>
 
       {/* Filter Section */}
-      <section className="py-8 bg-white border-b">
+      <section className="py-8 bg-black/30 border-b border-white/10">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <span className="text-gray-600 font-medium">Filter by:</span>
+            <span className="text-white/70 font-medium text-shadow">Filter by:</span>
             {['all', 'upcoming', 'ongoing', 'completed', 'cancelled'].map((status) => (
               <button
                 key={status}
                 onClick={() => setFilter(status)}
                 className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                   filter === status
-                    ? 'bg-primary-500 text-white'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    ? 'bg-white text-black neon-glow'
+                    : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white'
                 }`}
               >
                 {status.charAt(0).toUpperCase() + status.slice(1)}
@@ -183,7 +188,7 @@ export default function Events() {
       </section>
 
       {/* Events Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-black/50">
         <div className="container mx-auto px-4">
           {events.length === 0 ? (
             <motion.div
@@ -192,12 +197,12 @@ export default function Events() {
               transition={{ duration: 0.8 }}
               className="text-center py-12"
             >
-              <div className="text-gray-400 mb-4">
+              <div className="text-white/40 mb-4">
                 <Calendar size={64} className="mx-auto" />
               </div>
-              <h3 className="text-2xl font-bold text-gray-600 mb-2">No Events Yet</h3>
-              <p className="text-gray-500 mb-6">Events will appear here once they are added through the admin dashboard.</p>
-              <Link href="/admin/dashboard" className="btn-primary">
+              <h3 className="text-2xl font-bold text-white mb-2 text-shadow">No Events Yet</h3>
+              <p className="text-white/70 mb-6 text-shadow">Events will appear here once they are added through the admin dashboard.</p>
+              <Link href="/admin/dashboard" className="btn-primary neon-glow">
                 Go to Admin Dashboard
               </Link>
             </motion.div>
@@ -211,7 +216,7 @@ export default function Events() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="card p-6 hover:shadow-xl transition-all duration-300"
+                className="glass-card p-6 floating-card"
               >
                 <div className="mb-4">
                   {event.image ? (
@@ -221,8 +226,8 @@ export default function Events() {
                       className="w-full h-48 object-cover rounded mb-2"
                     />
                   ) : (
-                    <div className="w-full h-48 bg-gray-200 flex items-center justify-center rounded mb-2">
-                      <span className="text-gray-400">No Image</span>
+                    <div className="w-full h-48 bg-white/10 backdrop-blur-md flex items-center justify-center rounded mb-2 border border-white/20">
+                      <span className="text-white/40">No Image</span>
                     </div>
                   )}
                 </div>
@@ -237,30 +242,30 @@ export default function Events() {
                   </div>
                 </div>
 
-                <h3 className="text-xl font-bold text-gray-800 mb-3">{event.title}</h3>
-                <p className="text-gray-600 mb-4 leading-relaxed">{event.description}</p>
+                <h3 className="text-xl font-bold text-white mb-3 text-shadow">{event.title}</h3>
+                <p className="text-white/70 mb-4 leading-relaxed text-shadow">{event.description}</p>
 
                 <div className="space-y-2 mb-4">
-                  <div className="flex items-center text-sm text-gray-500">
+                  <div className="flex items-center text-sm text-white/60">
                     <Calendar className="mr-2" size={16} />
                     <span>{new Date(event.date).toLocaleDateString()}</span>
                   </div>
-                  <div className="flex items-center text-sm text-gray-500">
+                  <div className="flex items-center text-sm text-white/60">
                     <Clock className="mr-2" size={16} />
                     <span>{event.time}</span>
                   </div>
-                  <div className="flex items-center text-sm text-gray-500">
+                  <div className="flex items-center text-sm text-white/60">
                     <MapPin className="mr-2" size={16} />
                     <span>{event.location}</span>
                   </div>
-                  <div className="flex items-center text-sm text-gray-500">
+                  <div className="flex items-center text-sm text-white/60">
                     <Users className="mr-2" size={16} />
                     <span>{event.attendees}/{event.capacity} attendees</span>
                   </div>
                 </div>
 
                 <div className="flex justify-between items-center">
-                  <button className="text-primary-600 hover:text-primary-700 font-medium text-sm flex items-center">
+                  <button className="text-white hover:text-white/80 font-medium text-sm flex items-center neon-glow">
                     Learn More
                     <ArrowRight className="ml-1" size={16} />
                   </button>
@@ -269,7 +274,7 @@ export default function Events() {
                       href={event.registrationUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="btn-primary text-sm px-4 py-2"
+                      className="btn-primary text-sm px-4 py-2 neon-glow"
                     >
                       Register Now
                     </a>
@@ -289,7 +294,7 @@ export default function Events() {
               animate={{ opacity: 1 }}
               className="text-center py-12"
             >
-              <p className="text-gray-600 text-lg">No events found for the selected filter.</p>
+              <p className="text-white/70 text-lg text-shadow">No events found for the selected filter.</p>
             </motion.div>
           )}
             </>
@@ -298,7 +303,7 @@ export default function Events() {
       </section>
 
       {/* Event Categories */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-black/30">
         <div className="container mx-auto px-4">
           <motion.div 
             initial={{ opacity: 0, y: 50 }}
@@ -307,10 +312,10 @@ export default function Events() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gradient">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gradient text-shadow">
               Event Categories
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-white/70 max-w-3xl mx-auto text-shadow">
               Discover different types of events we organize throughout the year
             </p>
           </motion.div>
@@ -328,14 +333,14 @@ export default function Events() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="card p-6 text-center"
+                className="glass-card p-6 text-center floating-card"
               >
-                <div className={`w-16 h-16 ${category.color} rounded-full flex items-center justify-center mx-auto mb-4`}>
+                <div className={`w-16 h-16 ${category.color} rounded-full flex items-center justify-center mx-auto mb-4 neon-glow`}>
                   <Calendar className="text-white text-2xl" />
                 </div>
-                <h3 className="text-xl font-bold mb-2">{category.name}</h3>
-                <p className="text-2xl font-bold text-primary-600 mb-2">{category.count}</p>
-                <p className="text-gray-600 text-sm">{category.description}</p>
+                <h3 className="text-xl font-bold mb-2 text-white text-shadow">{category.name}</h3>
+                <p className="text-2xl font-bold text-white neon-glow mb-2">{category.count}</p>
+                <p className="text-white/70 text-sm text-shadow">{category.description}</p>
               </motion.div>
             ))}
           </div>
@@ -343,7 +348,7 @@ export default function Events() {
       </section>
 
       {/* Events CTA */}
-      <section className="py-20 bg-primary-900 text-white">
+      <section className="py-20 bg-black/50">
         <div className="container mx-auto px-4">
           <motion.div 
             initial={{ opacity: 0, y: 50 }}
@@ -352,18 +357,18 @@ export default function Events() {
             viewport={{ once: true }}
             className="text-center"
           >
-            <div className="bg-gradient-to-r from-secondary-500 to-primary-500 rounded-lg p-8 text-white max-w-3xl mx-auto">
-              <h3 className="text-2xl font-bold mb-4">Stay Updated</h3>
-              <p className="text-lg mb-6 opacity-90">
+            <div className="glass-card p-8 text-white max-w-3xl mx-auto floating-card">
+              <h3 className="text-2xl font-bold mb-4 text-shadow">Stay Updated</h3>
+              <p className="text-lg mb-6 text-white/90 text-shadow">
                 Never miss an event! Subscribe to our newsletter for the latest updates
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
                 <input 
                   type="email" 
                   placeholder="Enter your email"
-                  className="flex-1 px-4 py-3 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-white"
+                  className="flex-1 px-4 py-3 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-white"
                 />
-                <button className="btn-outline border-white text-white hover:bg-white hover:text-secondary-600">
+                <button className="btn-outline border-white text-white hover:bg-white hover:text-black neon-glow">
                   Subscribe
                 </button>
               </div>

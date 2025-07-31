@@ -94,12 +94,12 @@ export default function Team() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-black">
         <Header />
         <div className="flex items-center justify-center min-h-screen">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading team...</p>
+          <div className="text-center text-white">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto"></div>
+            <p className="mt-4 text-white/70">Loading team...</p>
           </div>
         </div>
       </div>
@@ -109,24 +109,27 @@ export default function Team() {
   const stats = getTeamStats()
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-black">
       <Header />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-20">
-        <div className="container mx-auto px-4">
+      <section className="hero-gradient min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center"
+            className="text-center text-white"
           >
-            <Link href="/" className="inline-flex items-center text-white/80 hover:text-white mb-8 transition-colors">
+            <Link href="/" className="inline-flex items-center text-white/80 hover:text-white mb-8 transition-colors text-shadow">
               <ArrowLeft size={20} className="mr-2" />
               Back to Home
             </Link>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">Meet Our Team</h1>
-            <p className="text-xl md:text-2xl max-w-3xl mx-auto opacity-90">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-shadow">
+              Meet Our <span className="text-white neon-glow">Team</span>
+            </h1>
+            <p className="text-xl md:text-2xl max-w-3xl mx-auto text-white/90 text-shadow">
               The passionate individuals driving innovation and entrepreneurship at our college
             </p>
           </motion.div>
@@ -134,7 +137,7 @@ export default function Team() {
       </section>
 
       {/* Team Stats */}
-      <section className="py-12 bg-white border-b">
+      <section className="py-12 bg-black/50 border-b border-white/10">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
@@ -150,11 +153,13 @@ export default function Team() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="text-center"
               >
-                <div className="flex justify-center mb-2">
-                  <stat.icon className="text-primary-600" size={24} />
+                <div className="glass-card p-4">
+                  <div className="flex justify-center mb-2">
+                    <stat.icon className="text-white" size={24} />
+                  </div>
+                  <div className="text-2xl font-bold text-white neon-glow">{stat.value}</div>
+                  <div className="text-sm text-white/70">{stat.label}</div>
                 </div>
-                <div className="text-2xl font-bold text-primary-600">{stat.value}</div>
-                <div className="text-sm text-gray-600">{stat.label}</div>
               </motion.div>
             ))}
           </div>
@@ -162,7 +167,7 @@ export default function Team() {
       </section>
 
       {/* Team Members */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-black/50">
         <div className="container mx-auto px-4">
           <motion.div 
             initial={{ opacity: 0, y: 50 }}
@@ -171,10 +176,10 @@ export default function Team() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gradient">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gradient text-shadow">
               Our Leadership Team
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-white/70 max-w-3xl mx-auto text-shadow">
               Meet the dedicated individuals who make E-Cell a thriving community of innovators and entrepreneurs
             </p>
           </motion.div>
@@ -186,12 +191,12 @@ export default function Team() {
               transition={{ duration: 0.8 }}
               className="text-center py-12"
             >
-              <div className="text-gray-400 mb-4">
+              <div className="text-white/40 mb-4">
                 <Users size={64} className="mx-auto" />
               </div>
-              <h3 className="text-2xl font-bold text-gray-600 mb-2">No Team Members Yet</h3>
-              <p className="text-gray-500 mb-6">Team members will appear here once they are added through the admin dashboard.</p>
-              <Link href="/admin/dashboard" className="btn-primary">
+              <h3 className="text-2xl font-bold text-white mb-2 text-shadow">No Team Members Yet</h3>
+              <p className="text-white/70 mb-6 text-shadow">Team members will appear here once they are added through the admin dashboard.</p>
+              <Link href="/admin/dashboard" className="btn-primary neon-glow">
                 Go to Admin Dashboard
               </Link>
             </motion.div>
@@ -204,10 +209,10 @@ export default function Team() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="card p-6 text-center hover:shadow-xl transition-all duration-300 group"
+                className="glass-card p-6 text-center floating-card group"
               >
                 <div className="mb-4">
-                  <div className="w-24 h-24 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold overflow-hidden">
+                  <div className="w-24 h-24 bg-gradient-to-r from-white/20 to-white/10 backdrop-blur-md rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold overflow-hidden border border-white/20 neon-glow">
                     {member.user.avatar ? (
                       <img
                         src={member.user.avatar}
@@ -218,14 +223,14 @@ export default function Team() {
                       member.user.name.split(' ').map(n => n[0]).join('')
                     )}
                   </div>
-                  <h3 className="text-xl font-bold text-gray-800 mb-1">{member.user.name}</h3>
-                  <p className="text-primary-600 font-semibold mb-2">{member.role}</p>
+                  <h3 className="text-xl font-bold text-white mb-1 text-shadow">{member.user.name}</h3>
+                  <p className="text-white font-semibold mb-2 neon-glow">{member.role}</p>
                   <span className={`px-3 py-1 rounded-full text-xs font-medium ${getDepartmentColor(member.department)}`}>
                     {member.department}
                   </span>
                 </div>
 
-                <p className="text-gray-600 text-sm mb-4 leading-relaxed">{member.bio}</p>
+                <p className="text-white/70 text-sm mb-4 leading-relaxed text-shadow">{member.bio}</p>
 
                 <div className="flex justify-center space-x-3">
                   {member.linkedin && (
@@ -233,7 +238,7 @@ export default function Team() {
                       href={member.linkedin} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-blue-600 transition-colors"
+                      className="text-white/60 hover:text-blue-400 transition-colors neon-glow"
                     >
                       <Linkedin size={20} />
                     </a>
@@ -243,7 +248,7 @@ export default function Team() {
                       href={member.twitter} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-blue-400 transition-colors"
+                      className="text-white/60 hover:text-blue-400 transition-colors neon-glow"
                     >
                       <Twitter size={20} />
                     </a>
@@ -251,7 +256,7 @@ export default function Team() {
                   {member.email && (
                     <a 
                       href={`mailto:${member.email}`}
-                      className="text-gray-400 hover:text-red-600 transition-colors"
+                      className="text-white/60 hover:text-red-400 transition-colors neon-glow"
                     >
                       <Mail size={20} />
                     </a>
@@ -265,7 +270,7 @@ export default function Team() {
       </section>
 
       {/* Departments Overview */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-black/30">
         <div className="container mx-auto px-4">
           <motion.div 
             initial={{ opacity: 0, y: 50 }}
@@ -274,10 +279,10 @@ export default function Team() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gradient">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gradient text-shadow">
               Our Departments
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-white/70 max-w-3xl mx-auto text-shadow">
               Organized teams working together to create a comprehensive entrepreneurial ecosystem
             </p>
           </motion.div>
@@ -292,11 +297,11 @@ export default function Team() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="card p-6 text-center"
+                className="glass-card p-6 text-center floating-card"
               >
-                <h3 className="text-xl font-bold mb-2">{dept.name}</h3>
-                <div className="text-3xl font-bold text-primary-600 mb-2">{memberCount}</div>
-                <p className="text-gray-600 text-sm">{dept.description || 'Department description'}</p>
+                <h3 className="text-xl font-bold mb-2 text-white text-shadow">{dept.name}</h3>
+                <div className="text-3xl font-bold text-white neon-glow mb-2">{memberCount}</div>
+                <p className="text-white/70 text-sm text-shadow">{dept.description || 'Department description'}</p>
               </motion.div>
               )
             })}
@@ -305,7 +310,7 @@ export default function Team() {
       </section>
 
       {/* Join Team CTA */}
-      <section className="py-20 bg-primary-900 text-white">
+      <section className="py-20 bg-black/50">
         <div className="container mx-auto px-4">
           <motion.div 
             initial={{ opacity: 0, y: 50 }}
@@ -314,17 +319,19 @@ export default function Team() {
             viewport={{ once: true }}
             className="text-center"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Join Our Team</h2>
-            <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-              Want to be part of our mission? We're always looking for passionate individuals to join our team.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/contact" className="btn-outline border-white text-white hover:bg-white hover:text-primary-600 text-lg px-8 py-4">
-                Contact Us
-              </Link>
-              <Link href="/events" className="bg-white text-primary-600 hover:bg-gray-100 font-semibold text-lg px-8 py-4 rounded-lg transition-all duration-300">
-                Attend Events
-              </Link>
+            <div className="glass-card p-12 text-white floating-card">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-shadow">Join Our Team</h2>
+              <p className="text-xl mb-8 text-white/90 max-w-2xl mx-auto text-shadow">
+                Want to be part of our mission? We're always looking for passionate individuals to join our team.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link href="/contact" className="btn-outline border-white text-white hover:bg-white hover:text-black text-lg px-8 py-4 neon-glow">
+                  Contact Us
+                </Link>
+                <Link href="/events" className="bg-white text-black hover:bg-gray-100 font-semibold text-lg px-8 py-4 rounded-lg transition-all duration-300 neon-glow">
+                  Attend Events
+                </Link>
+              </div>
             </div>
           </motion.div>
         </div>
