@@ -99,9 +99,9 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/40"></div>
         <div className="container mx-auto px-4 relative z-10">
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 50 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
+            transition={{ duration: 0.5 }}
             className="text-center text-white"
           >
             <h1 className="text-5xl md:text-7xl font-bold mb-6 text-shadow">
@@ -121,11 +121,11 @@ export default function Home() {
           </motion.div>
         </div>
         <motion.div 
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          animate={{ y: [0, -5, 0] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
         >
-          <ChevronDown className="text-white text-4xl animate-bounce" />
+          <ChevronDown className="text-white text-4xl" />
         </motion.div>
       </section>
 
@@ -133,9 +133,9 @@ export default function Home() {
       <section className="py-20 bg-black/50">
         <div className="container mx-auto px-4">
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
@@ -151,14 +151,14 @@ export default function Home() {
             {features.map((feature, index) => (
               <motion.div
                 key={feature.title}
-                initial={{ opacity: 0, y: 50 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
                 <Link href={feature.link} className="block">
-                  <div className="glass-card p-8 text-center group hover:scale-105 transition-transform duration-300 floating-card">
-                    <div className={`w-16 h-16 ${feature.color} backdrop-blur-md rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 border border-white/20`}>
+                  <div className="glass-card p-8 text-center group hover:scale-102 transition-transform duration-300">
+                    <div className={`w-16 h-16 ${feature.color} backdrop-blur-md rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-105 transition-transform duration-300 border border-white/20`}>
                       <feature.icon className="text-white text-2xl" />
                     </div>
                     <h3 className="text-2xl font-bold mb-4 text-white">{feature.title}</h3>
@@ -180,9 +180,9 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <motion.div 
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.5 }}
               viewport={{ once: true }}
             >
               <h2 className="text-4xl font-bold mb-6 text-gradient">Our Mission</h2>
@@ -202,9 +202,9 @@ export default function Home() {
       <section className="py-20 bg-black/80 text-white">
         <div className="container mx-auto px-4">
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
@@ -223,9 +223,9 @@ export default function Home() {
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, scale: 0.5 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 className="text-center"
               >
@@ -243,9 +243,9 @@ export default function Home() {
       <section className="py-20 bg-black/50">
         <div className="container mx-auto px-4">
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
             className="text-center"
           >

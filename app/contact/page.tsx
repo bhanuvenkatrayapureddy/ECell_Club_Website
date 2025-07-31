@@ -84,9 +84,9 @@ export default function Contact() {
         <div className="absolute inset-0 bg-black/40"></div>
         <div className="container mx-auto px-4 relative z-10">
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             className="text-center text-white"
           >
             <Link href="/" className="inline-flex items-center text-white/80 hover:text-white mb-8 transition-colors text-shadow">
@@ -107,9 +107,9 @@ export default function Contact() {
       <section className="py-20 bg-black/50">
         <div className="container mx-auto px-4">
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
@@ -125,11 +125,11 @@ export default function Contact() {
             {contactInfo.map((info, index) => (
               <motion.div
                 key={info.title}
-                initial={{ opacity: 0, y: 50 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
                 viewport={{ once: true }}
-                className="glass-card p-6 text-center floating-card"
+                className="glass-card p-6 text-center"
               >
                 <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center mx-auto mb-4 border border-white/20 neon-glow">
                   <info.icon className="text-white text-2xl" />
@@ -144,9 +144,9 @@ export default function Contact() {
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Form */}
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
+              initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.5 }}
               viewport={{ once: true }}
             >
               <h3 className="text-2xl font-bold mb-6 text-white text-shadow">Send us a Message</h3>
@@ -207,9 +207,9 @@ export default function Contact() {
 
             {/* Additional Info */}
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
+              initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.5 }}
               viewport={{ once: true }}
             >
               <h3 className="text-2xl font-bold mb-6 text-white text-shadow">Connect With Us</h3>
@@ -249,7 +249,7 @@ export default function Contact() {
                   </div>
                 </div>
 
-                <div className="glass-card p-6 floating-card">
+                <div className="glass-card p-6">
                   <div className="flex items-start space-x-4">
                     <MessageSquare className="text-white mt-1" size={20} />
                     <div>
@@ -273,9 +273,9 @@ export default function Contact() {
       <section className="py-20 bg-black/30">
         <div className="container mx-auto px-4">
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
             className="text-center mb-12"
           >
@@ -284,11 +284,11 @@ export default function Contact() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
             viewport={{ once: true }}
-            className="glass-card p-8 text-center floating-card"
+            className="glass-card p-8 text-center"
           >
             <div className="w-full h-64 bg-white/10 backdrop-blur-md rounded-lg mb-6 flex items-center justify-center border border-white/20">
               <div className="text-center">
@@ -309,9 +309,9 @@ export default function Contact() {
       <section className="py-20 bg-black/80">
         <div className="container mx-auto px-4">
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
@@ -344,11 +344,11 @@ export default function Contact() {
             ].map((faq, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
                 viewport={{ once: true }}
-                className="glass-card p-6 floating-card"
+                className="glass-card p-6"
               >
                 <h3 className="text-lg font-bold mb-3 text-white text-shadow">{faq.question}</h3>
                 <p className="text-white/70 text-shadow">{faq.answer}</p>

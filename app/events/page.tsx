@@ -119,9 +119,9 @@ export default function Events() {
         <div className="absolute inset-0 bg-black/40"></div>
         <div className="container mx-auto px-4 relative z-10">
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             className="text-center text-white"
           >
             <Link href="/" className="inline-flex items-center text-white/80 hover:text-white mb-8 transition-colors text-shadow">
@@ -150,9 +150,9 @@ export default function Events() {
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
                 className="text-center"
               >
                 <div className="glass-card p-4">
@@ -192,9 +192,9 @@ export default function Events() {
         <div className="container mx-auto px-4">
           {events.length === 0 ? (
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.5 }}
               className="text-center py-12"
             >
               <div className="text-white/40 mb-4">
@@ -212,11 +212,11 @@ export default function Events() {
                 {filteredEvents.map((event, index) => (
               <motion.div
                 key={event.id}
-                initial={{ opacity: 0, y: 50 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
                 viewport={{ once: true }}
-                className="glass-card p-6 floating-card"
+                className="glass-card p-6"
               >
                 <div className="mb-4">
                   {event.image ? (
@@ -306,9 +306,9 @@ export default function Events() {
       <section className="py-20 bg-black/30">
         <div className="container mx-auto px-4">
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
@@ -329,11 +329,11 @@ export default function Events() {
             ].map((category, index) => (
               <motion.div
                 key={category.name}
-                initial={{ opacity: 0, y: 50 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
                 viewport={{ once: true }}
-                className="glass-card p-6 text-center floating-card"
+                className="glass-card p-6 text-center"
               >
                 <div className={`w-16 h-16 ${category.color} rounded-full flex items-center justify-center mx-auto mb-4 neon-glow`}>
                   <Calendar className="text-white text-2xl" />
@@ -351,13 +351,13 @@ export default function Events() {
       <section className="py-20 bg-black/50">
         <div className="container mx-auto px-4">
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
             className="text-center"
           >
-            <div className="glass-card p-8 text-white max-w-3xl mx-auto floating-card">
+            <div className="glass-card p-8 text-white max-w-3xl mx-auto">
               <h3 className="text-2xl font-bold mb-4 text-shadow">Stay Updated</h3>
               <p className="text-lg mb-6 text-white/90 text-shadow">
                 Never miss an event! Subscribe to our newsletter for the latest updates

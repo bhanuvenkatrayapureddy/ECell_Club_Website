@@ -117,9 +117,9 @@ export default function Timeline() {
         <div className="absolute inset-0 bg-black/40"></div>
         <div className="container mx-auto px-4 relative z-10">
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             className="text-center text-white"
           >
             <Link href="/" className="inline-flex items-center text-white/80 hover:text-white mb-8 transition-colors text-shadow">
@@ -142,9 +142,9 @@ export default function Timeline() {
           <div className="max-w-4xl mx-auto">
             {timelineItems.length === 0 ? (
               <motion.div
-                initial={{ opacity: 0, y: 50 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
+                transition={{ duration: 0.5 }}
                 className="text-center py-12"
               >
                 <div className="text-white/40 mb-4">
@@ -160,9 +160,9 @@ export default function Timeline() {
               timelineItems.map((item, index) => (
               <motion.div
                 key={item.id}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
                 viewport={{ once: true }}
                 className={`timeline-item ${index === timelineItems.length - 1 ? 'border-l-0' : ''}`}
               >
@@ -170,7 +170,7 @@ export default function Timeline() {
                   <div className="flex-shrink-0">
                     {getStatusIcon(item.status)}
                   </div>
-                  <div className="flex-1 glass-card p-6 border-l-4 border-white/50 floating-card">
+                  <div className="flex-1 glass-card p-6 border-l-4 border-white/50">
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="text-xl font-bold text-white text-shadow">{item.title}</h3>
                       <div className="flex items-center space-x-2">
@@ -223,13 +223,13 @@ export default function Timeline() {
       <section className="py-20 bg-black/30">
         <div className="container mx-auto px-4">
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
             className="text-center"
           >
-            <div className="glass-card p-8 text-white max-w-2xl mx-auto floating-card">
+            <div className="glass-card p-8 text-white max-w-2xl mx-auto">
               <h3 className="text-2xl font-bold mb-4 text-shadow">Overall Progress</h3>
               <div className="w-full bg-white/20 rounded-full h-4 mb-4">
                 <div 
@@ -247,9 +247,9 @@ export default function Timeline() {
       <section className="py-20 bg-black/80">
         <div className="container mx-auto px-4">
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
@@ -263,11 +263,11 @@ export default function Timeline() {
 
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
               viewport={{ once: true }}
-              className="glass-card p-6 text-center floating-card"
+              className="glass-card p-6 text-center"
             >
               <h3 className="text-xl font-bold mb-4 text-white text-shadow">Objective</h3>
               <p className="text-white/70 text-shadow">
@@ -276,11 +276,11 @@ export default function Timeline() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
-              className="glass-card p-6 text-center floating-card"
+              className="glass-card p-6 text-center"
             >
               <h3 className="text-xl font-bold mb-4 text-white text-shadow">Scope</h3>
               <p className="text-white/70 text-shadow">
@@ -289,11 +289,11 @@ export default function Timeline() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
               viewport={{ once: true }}
-              className="glass-card p-6 text-center floating-card"
+              className="glass-card p-6 text-center"
             >
               <h3 className="text-xl font-bold mb-4 text-white text-shadow">Timeline</h3>
               <p className="text-white/70 text-shadow">
@@ -308,13 +308,13 @@ export default function Timeline() {
       <section className="py-20 bg-black/50">
         <div className="container mx-auto px-4">
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
             className="text-center"
           >
-            <div className="glass-card p-12 text-white floating-card">
+            <div className="glass-card p-12 text-white">
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-shadow">Stay Updated</h2>
               <p className="text-xl mb-8 text-white/90 max-w-2xl mx-auto text-shadow">
                 Follow our progress and get notified about new features and updates.

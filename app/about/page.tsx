@@ -53,9 +53,9 @@ export default function About() {
         <div className="absolute inset-0 bg-black/40"></div>
         <div className="container mx-auto px-4 relative z-10">
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             className="text-center text-white"
           >
             <Link href="/" className="inline-flex items-center text-white/80 hover:text-white mb-8 transition-colors text-shadow">
@@ -78,9 +78,9 @@ export default function About() {
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div 
-              initial={{ opacity: 0, x: -50 }}
+              initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.5 }}
               viewport={{ once: true }}
             >
               <h2 className="text-4xl font-bold mb-6 text-gradient text-shadow">Our Mission</h2>
@@ -99,11 +99,11 @@ export default function About() {
             </motion.div>
 
             <motion.div 
-              initial={{ opacity: 0, x: 50 }}
+              initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="glass-card p-8 floating-card"
+              className="glass-card p-8"
             >
               <h3 className="text-3xl font-bold mb-6 text-white text-shadow">Our Vision</h3>
               <p className="text-lg text-white/70 mb-6 leading-relaxed text-shadow">
@@ -137,9 +137,9 @@ export default function About() {
       <section className="py-20 bg-black/30">
         <div className="container mx-auto px-4">
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
@@ -155,11 +155,11 @@ export default function About() {
             {values.map((value, index) => (
               <motion.div
                 key={value.title}
-                initial={{ opacity: 0, y: 50 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="glass-card p-8 text-center floating-card"
+                className="glass-card p-8 text-center"
               >
                 <div className={`w-16 h-16 ${value.color} backdrop-blur-md rounded-full flex items-center justify-center mx-auto mb-6 border border-white/20 neon-glow`}>
                   <value.icon className="text-white text-2xl" />
@@ -178,9 +178,9 @@ export default function About() {
       <section className="py-20 bg-black/80">
         <div className="container mx-auto px-4">
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
@@ -195,9 +195,9 @@ export default function About() {
           <div className="max-w-4xl mx-auto">
             <div className="space-y-8">
               <motion.div 
-                initial={{ opacity: 0, x: -50 }}
+                initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
+                transition={{ duration: 0.5 }}
                 viewport={{ once: true }}
                 className="flex items-start space-x-6"
               >
@@ -211,9 +211,9 @@ export default function About() {
               </motion.div>
 
               <motion.div 
-                initial={{ opacity: 0, x: -50 }}
+                initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.1 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
                 viewport={{ once: true }}
                 className="flex items-start space-x-6"
               >
@@ -227,9 +227,9 @@ export default function About() {
               </motion.div>
 
               <motion.div 
-                initial={{ opacity: 0, x: -50 }}
+                initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
                 viewport={{ once: true }}
                 className="flex items-start space-x-6"
               >
@@ -250,9 +250,9 @@ export default function About() {
       <section className="py-20 bg-black/50">
         <div className="container mx-auto px-4">
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
             className="text-center"
           >

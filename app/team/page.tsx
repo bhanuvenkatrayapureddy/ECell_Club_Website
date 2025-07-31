@@ -117,9 +117,9 @@ export default function Team() {
         <div className="absolute inset-0 bg-black/40"></div>
         <div className="container mx-auto px-4 relative z-10">
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             className="text-center text-white"
           >
             <Link href="/" className="inline-flex items-center text-white/80 hover:text-white mb-8 transition-colors text-shadow">
@@ -148,9 +148,9 @@ export default function Team() {
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
                 className="text-center"
               >
                 <div className="glass-card p-4">
@@ -170,9 +170,9 @@ export default function Team() {
       <section className="py-20 bg-black/50">
         <div className="container mx-auto px-4">
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
@@ -186,9 +186,9 @@ export default function Team() {
 
           {teamMembers.length === 0 ? (
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.5 }}
               className="text-center py-12"
             >
               <div className="text-white/40 mb-4">
@@ -205,11 +205,11 @@ export default function Team() {
               {teamMembers.map((member, index) => (
               <motion.div
                 key={member.id}
-                initial={{ opacity: 0, y: 50 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
                 viewport={{ once: true }}
-                className="glass-card p-6 text-center floating-card group"
+                className="glass-card p-6 text-center group"
               >
                 <div className="mb-4">
                   <div className="w-24 h-24 bg-gradient-to-r from-white/20 to-white/10 backdrop-blur-md rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold overflow-hidden border border-white/20 neon-glow">
@@ -273,9 +273,9 @@ export default function Team() {
       <section className="py-20 bg-black/30">
         <div className="container mx-auto px-4">
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
@@ -293,11 +293,11 @@ export default function Team() {
               return (
               <motion.div
                 key={dept.name}
-                initial={{ opacity: 0, y: 50 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
                 viewport={{ once: true }}
-                className="glass-card p-6 text-center floating-card"
+                className="glass-card p-6 text-center"
               >
                 <h3 className="text-xl font-bold mb-2 text-white text-shadow">{dept.name}</h3>
                 <div className="text-3xl font-bold text-white neon-glow mb-2">{memberCount}</div>
@@ -313,13 +313,13 @@ export default function Team() {
       <section className="py-20 bg-black/50">
         <div className="container mx-auto px-4">
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
             className="text-center"
           >
-            <div className="glass-card p-12 text-white floating-card">
+            <div className="glass-card p-12 text-white">
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-shadow">Join Our Team</h2>
               <p className="text-xl mb-8 text-white/90 max-w-2xl mx-auto text-shadow">
                 Want to be part of our mission? We're always looking for passionate individuals to join our team.
