@@ -20,22 +20,22 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-black`}>
+      <body className={`${inter.className} bg-gradient-to-br from-primary-600 via-secondary-600 to-accent-600`}>
         {children}
         <Toaster 
           position="top-right"
           toastOptions={{
             duration: 4000,
             style: {
-              background: 'rgba(0, 0, 0, 0.9)',
+              background: 'rgba(102, 126, 234, 0.95)',
               color: '#fff',
               backdropFilter: 'blur(20px)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
             },
             success: {
               duration: 3000,
               iconTheme: {
-                primary: '#10b981',
+                primary: '#22c55e',
                 secondary: '#fff',
               },
             },
