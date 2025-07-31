@@ -21,7 +21,8 @@ import {
   Linkedin,
   Twitter,
   Mail,
-  Building
+  Building,
+  LogOut
 } from 'lucide-react'
 import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
@@ -116,6 +117,12 @@ export default function AdminDashboard() {
       fetchDashboardData()
     }
   }, [activeTab])
+
+  const handleLogout = () => {
+    localStorage.removeItem('admin-auth')
+    router.push('/admin')
+    toast.success('Logged out successfully')
+  }
 
   const fetchDashboardData = async () => {
     setIsLoading(true)
@@ -440,44 +447,44 @@ export default function AdminDashboard() {
     }
 
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
+      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+        <div className="glass-card p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-bold">{getModalTitle()}</h3>
-            <button onClick={() => setShowModal(false)} className="text-gray-500 hover:text-gray-700">
+            <h3 className="text-lg font-bold text-white">{getModalTitle()}</h3>
+            <button onClick={() => setShowModal(false)} className="text-white/60 hover:text-white transition-colors">
               <X size={20} />
             </button>
           </div>
 
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium mb-1">Title *</label>
+              <label className="form-label">Title *</label>
               <input
                 type="text"
                 value={formData.title || ''}
                 onChange={(e) => setFormData({...formData, title: e.target.value})}
-                className="w-full p-2 border rounded"
+                className="form-input"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">Description *</label>
+              <label className="form-label">Description *</label>
               <textarea
                 value={formData.description || ''}
                 onChange={(e) => setFormData({...formData, description: e.target.value})}
-                className="w-full p-2 border rounded"
+                className="form-input"
                 rows={3}
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">Status</label>
+              <label className="form-label">Status</label>
               <select
                 value={formData.status || (modalType === 'event' ? 'UPCOMING' : 'PENDING')}
                 onChange={(e) => setFormData({...formData, status: e.target.value})}
-                className="w-full p-2 border rounded"
+                className="form-input"
               >
                 {modalType === 'event' ? (
                   <>
@@ -499,31 +506,31 @@ export default function AdminDashboard() {
             {modalType === 'timeline' && (
               <>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Due Date</label>
+                  <label className="form-label">Due Date</label>
                   <input
                     type="date"
                     value={formData.dueDate || ''}
                     onChange={(e) => setFormData({...formData, dueDate: e.target.value})}
-                    className="w-full p-2 border rounded"
+                    className="form-input"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Order</label>
+                  <label className="form-label">Order</label>
                   <input
                     type="number"
                     value={formData.order || 0}
                     onChange={(e) => setFormData({...formData, order: parseInt(e.target.value)})}
-                    className="w-full p-2 border rounded"
+                    className="form-input"
                   />
                 </div>
                 {formData.status === 'COMPLETED' && (
                   <div>
-                    <label className="block text-sm font-medium mb-1">Completion Date</label>
+                    <label className="form-label">Completion Date</label>
                     <input
                       type="date"
                       value={formData.completedAt || ''}
                       onChange={(e) => setFormData({...formData, completedAt: e.target.value})}
-                      className="w-full p-2 border rounded"
+                      className="form-input"
                     />
                   </div>
                 )}
@@ -533,73 +540,73 @@ export default function AdminDashboard() {
             {modalType === 'event' && (
               <>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Date *</label>
+                  <label className="form-label">Date *</label>
                   <input
                     type="date"
                     value={formData.date || ''}
                     onChange={(e) => setFormData({...formData, date: e.target.value})}
-                    className="w-full p-2 border rounded"
+                    className="form-input"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Time *</label>
+                  <label className="form-label">Time *</label>
                   <input
                     type="text"
                     value={formData.time || ''}
                     onChange={(e) => setFormData({...formData, time: e.target.value})}
                     placeholder="2:00 PM - 4:00 PM"
-                    className="w-full p-2 border rounded"
+                    className="form-input"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Location *</label>
+                  <label className="form-label">Location *</label>
                   <input
                     type="text"
                     value={formData.location || ''}
                     onChange={(e) => setFormData({...formData, location: e.target.value})}
-                    className="w-full p-2 border rounded"
+                    className="form-input"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Capacity</label>
+                  <label className="form-label">Capacity</label>
                   <input
                     type="number"
                     value={formData.capacity || ''}
                     onChange={(e) => setFormData({...formData, capacity: parseInt(e.target.value)})}
-                    className="w-full p-2 border rounded"
+                    className="form-input"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Category *</label>
+                  <label className="form-label">Category *</label>
                   <input
                     type="text"
                     value={formData.category || ''}
                     onChange={(e) => setFormData({...formData, category: e.target.value})}
-                    className="w-full p-2 border rounded"
+                    className="form-input"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Registration URL (Google Form, optional)</label>
+                  <label className="form-label">Registration URL (Google Form, optional)</label>
                   <input
                     type="url"
                     value={formData.registrationUrl || ''}
                     onChange={e => setFormData({ ...formData, registrationUrl: e.target.value })}
-                    className="w-full p-2 border rounded"
+                    className="form-input"
                     placeholder="https://forms.gle/..."
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Event Image (Optional)</label>
+                  <label className="form-label">Event Image (Optional)</label>
                   <div className="space-y-2">
                     <input
                       type="file"
                       accept="image/*"
                       onChange={(e) => handleImageUpload(e, 'event')}
-                      className="w-full p-2 border rounded"
+                      className="form-input"
                     />
                     {formData.image && (
                       <div className="flex items-center space-x-2">
@@ -611,7 +618,7 @@ export default function AdminDashboard() {
                         <button
                           type="button"
                           onClick={() => setFormData({...formData, image: ''})}
-                          className="text-red-500 text-sm hover:text-red-700"
+                          className="text-red-400 text-sm hover:text-red-300 transition-colors"
                         >
                           Remove
                         </button>
@@ -625,41 +632,41 @@ export default function AdminDashboard() {
             {modalType === 'team' && (
               <>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Name *</label>
+                  <label className="form-label">Name *</label>
                   <input
                     type="text"
                     value={formData.name || ''}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    className="w-full p-2 border rounded"
+                    className="form-input"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Email *</label>
+                  <label className="form-label">Email *</label>
                   <input
                     type="email"
                     value={formData.email || ''}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    className="w-full p-2 border rounded"
+                    className="form-input"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Role *</label>
+                  <label className="form-label">Role *</label>
                   <input
                     type="text"
                     value={formData.role || ''}
                     onChange={(e) => setFormData({...formData, role: e.target.value})}
-                    className="w-full p-2 border rounded"
+                    className="form-input"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Department *</label>
+                  <label className="form-label">Department *</label>
                   <select
                     value={formData.department || ''}
                     onChange={(e) => setFormData({...formData, department: e.target.value})}
-                    className="w-full p-2 border rounded"
+                    className="form-input"
                     required
                   >
                     <option value="">Select Department</option>
@@ -671,31 +678,31 @@ export default function AdminDashboard() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Bio</label>
+                  <label className="form-label">Bio</label>
                   <textarea
                     value={formData.bio || ''}
                     onChange={(e) => setFormData({...formData, bio: e.target.value})}
-                    className="w-full p-2 border rounded"
+                    className="form-input"
                     rows={3}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">LinkedIn</label>
+                  <label className="form-label">LinkedIn</label>
                   <input
                     type="url"
                     value={formData.linkedin || ''}
                     onChange={(e) => setFormData({...formData, linkedin: e.target.value})}
-                    className="w-full p-2 border rounded"
+                    className="form-input"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Profile Image (Optional)</label>
+                  <label className="form-label">Profile Image (Optional)</label>
                   <div className="space-y-2">
                     <input
                       type="file"
                       accept="image/*"
                       onChange={(e) => handleImageUpload(e, 'team')}
-                      className="w-full p-2 border rounded"
+                      className="form-input"
                     />
                     {formData.avatar && (
                       <div className="flex items-center space-x-2">
@@ -707,7 +714,7 @@ export default function AdminDashboard() {
                         <button
                           type="button"
                           onClick={() => setFormData({...formData, avatar: ''})}
-                          className="text-red-500 text-sm hover:text-red-700"
+                          className="text-red-400 text-sm hover:text-red-300 transition-colors"
                         >
                           Remove
                         </button>
@@ -716,12 +723,12 @@ export default function AdminDashboard() {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Twitter</label>
+                  <label className="form-label">Twitter</label>
                   <input
                     type="url"
                     value={formData.twitter || ''}
                     onChange={(e) => setFormData({...formData, twitter: e.target.value})}
-                    className="w-full p-2 border rounded"
+                    className="form-input"
                   />
                 </div>
               </>
@@ -731,13 +738,13 @@ export default function AdminDashboard() {
           <div className="flex justify-end space-x-3 mt-6">
             <button
               onClick={() => setShowModal(false)}
-              className="px-4 py-2 text-gray-600 border rounded hover:bg-gray-50"
+              className="px-4 py-2 text-white/70 border border-white/20 rounded hover:bg-white/10 transition-colors"
             >
               Cancel
             </button>
             <button
               onClick={handleSaveItem}
-              className="px-4 py-2 bg-primary-600 text-white rounded hover:bg-primary-700"
+              className="btn-primary"
             >
               {editingItem ? 'Update' : 'Create'}
             </button>
@@ -750,43 +757,47 @@ export default function AdminDashboard() {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'COMPLETED':
-        return <CheckCircle className="text-green-500" size={16} />
+        return <CheckCircle className="text-green-400" size={16} />
       case 'IN_PROGRESS':
-        return <AlertCircle className="text-yellow-500" size={16} />
+        return <AlertCircle className="text-yellow-400" size={16} />
       case 'PENDING':
-        return <Clock className="text-gray-400" size={16} />
+        return <Clock className="text-white/60" size={16} />
       case 'CANCELLED':
-        return <XCircle className="text-red-500" size={16} />
+        return <XCircle className="text-red-400" size={16} />
       default:
-        return <Clock className="text-gray-400" size={16} />
+        return <Clock className="text-white/60" size={16} />
     }
   }
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen gradient-bg flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading dashboard...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto"></div>
+          <p className="mt-4 text-white/70">Loading dashboard...</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen gradient-bg">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
+      <div className="glass-nav border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-              <p className="text-gray-600">Manage your E-Cell website</p>
+              <h1 className="text-3xl font-bold text-white neon-glow">Admin Dashboard</h1>
+              <p className="text-white/70">Manage your E-Cell website</p>
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-500">Welcome, Admin</span>
-              <button className="text-gray-500 hover:text-gray-700">
-                <Users size={20} />
+              <span className="text-sm text-white/70">Welcome, Admin</span>
+              <button 
+                onClick={handleLogout}
+                className="text-white/70 hover:text-white transition-colors"
+                title="Logout"
+              >
+                <LogOut size={20} />
               </button>
             </div>
           </div>
@@ -794,7 +805,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Navigation Tabs */}
-      <div className="bg-white border-b">
+      <div className="glass-nav border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="flex space-x-8">
             {[
@@ -808,10 +819,10 @@ export default function AdminDashboard() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm ${
+                className={`flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
                   activeTab === tab.id
-                    ? 'border-primary-500 text-primary-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? 'border-white text-white neon-glow'
+                    : 'border-transparent text-white/60 hover:text-white/80 hover:border-white/30'
                 }`}
               >
                 <tab.icon size={16} />
@@ -833,19 +844,19 @@ export default function AdminDashboard() {
           >
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
               {[
-                { label: 'Total Members', value: stats.totalMembers, icon: Users, color: 'bg-blue-500' },
-                { label: 'Upcoming Events', value: stats.upcomingEvents, icon: Calendar, color: 'bg-green-500' },
-                { label: 'Total Views', value: stats.totalViews, icon: Activity, color: 'bg-purple-500' },
-                { label: 'Completed Tasks', value: stats.completedTasks, icon: CheckCircle, color: 'bg-orange-500' }
+                { label: 'Total Members', value: stats.totalMembers, icon: Users, color: 'bg-blue-500/20 border-blue-500/30' },
+                { label: 'Upcoming Events', value: stats.upcomingEvents, icon: Calendar, color: 'bg-green-500/20 border-green-500/30' },
+                { label: 'Total Views', value: stats.totalViews, icon: Activity, color: 'bg-purple-500/20 border-purple-500/30' },
+                { label: 'Completed Tasks', value: stats.completedTasks, icon: CheckCircle, color: 'bg-orange-500/20 border-orange-500/30' }
               ].map((stat, index) => (
-                <div key={stat.label} className="bg-white rounded-lg shadow p-6">
+                <div key={stat.label} className="glass-card p-6">
                   <div className="flex items-center">
-                    <div className={`${stat.color} rounded-lg p-3`}>
+                    <div className={`${stat.color} rounded-lg p-3 border`}>
                       <stat.icon className="text-white" size={24} />
                     </div>
                     <div className="ml-4">
-                      <p className="text-sm font-medium text-gray-600">{stat.label}</p>
-                      <p className="text-2xl font-bold text-gray-900">{stat.value.toLocaleString()}</p>
+                      <p className="text-sm font-medium text-white/70">{stat.label}</p>
+                      <p className="text-2xl font-bold text-white">{stat.value.toLocaleString()}</p>
                     </div>
                   </div>
                 </div>
@@ -854,15 +865,15 @@ export default function AdminDashboard() {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Recent Activity */}
-              <div className="bg-white rounded-lg shadow p-6">
-                <h3 className="text-lg font-semibold mb-4">Recent Activity</h3>
+              <div className="glass-card p-6">
+                <h3 className="text-lg font-semibold mb-4 text-white">Recent Activity</h3>
                 <div className="space-y-4">
                   {timelineItems.slice(0, 5).map((item) => (
                     <div key={item.id} className="flex items-center space-x-3">
                       {getStatusIcon(item.status)}
                       <div className="flex-1">
-                        <p className="text-sm font-medium">{item.title}</p>
-                        <p className="text-xs text-gray-500">{item.status}</p>
+                        <p className="text-sm font-medium text-white">{item.title}</p>
+                        <p className="text-xs text-white/60">{item.status}</p>
                       </div>
                     </div>
                   ))}
@@ -870,26 +881,26 @@ export default function AdminDashboard() {
               </div>
 
               {/* Quick Actions */}
-              <div className="bg-white rounded-lg shadow p-6">
-                <h3 className="text-lg font-semibold mb-4">Quick Actions</h3>
+              <div className="glass-card p-6">
+                <h3 className="text-lg font-semibold mb-4 text-white">Quick Actions</h3>
                 <div className="space-y-3">
                   <button
                     onClick={() => handleAddItem('timeline')}
-                    className="w-full flex items-center justify-center space-x-2 bg-primary-600 text-white py-2 px-4 rounded hover:bg-primary-700"
+                    className="w-full flex items-center justify-center space-x-2 bg-white/10 hover:bg-white/20 text-white py-2 px-4 rounded border border-white/20 transition-colors"
                   >
                     <Plus size={16} />
                     <span>Add Timeline Item</span>
                   </button>
                   <button
                     onClick={() => handleAddItem('event')}
-                    className="w-full flex items-center justify-center space-x-2 bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700"
+                    className="w-full flex items-center justify-center space-x-2 bg-white/10 hover:bg-white/20 text-white py-2 px-4 rounded border border-white/20 transition-colors"
                   >
                     <Plus size={16} />
                     <span>Add Event</span>
                   </button>
                   <button
                     onClick={() => handleAddItem('team')}
-                    className="w-full flex items-center justify-center space-x-2 bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700"
+                    className="w-full flex items-center justify-center space-x-2 bg-white/10 hover:bg-white/20 text-white py-2 px-4 rounded border border-white/20 transition-colors"
                   >
                     <Plus size={16} />
                     <span>Add Team Member</span>
@@ -908,60 +919,60 @@ export default function AdminDashboard() {
             transition={{ duration: 0.5 }}
           >
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold">Timeline Management</h2>
+              <h2 className="text-2xl font-bold text-white">Timeline Management</h2>
               <button
                 onClick={() => handleAddItem('timeline')}
-                className="flex items-center space-x-2 bg-primary-600 text-white px-4 py-2 rounded hover:bg-primary-700"
+                className="flex items-center space-x-2 btn-primary"
               >
                 <Plus size={16} />
                 <span>Add Item</span>
               </button>
             </div>
 
-            <div className="bg-white rounded-lg shadow overflow-hidden">
+            <div className="glass-card overflow-hidden">
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
+                <table className="min-w-full divide-y divide-white/10">
+                  <thead className="bg-white/5">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Title</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Status</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Due Date</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Order</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                  <tbody className="divide-y divide-white/10">
                     {timelineItems.map((item) => (
-                      <tr key={item.id}>
+                      <tr key={item.id} className="hover:bg-white/5 transition-colors">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div>
-                            <div className="text-sm font-medium text-gray-900">{item.title}</div>
-                            <div className="text-sm text-gray-500">{item.description}</div>
+                            <div className="text-sm font-medium text-white">{item.title}</div>
+                            <div className="text-sm text-white/60">{item.description}</div>
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             {getStatusIcon(item.status)}
-                            <span className="ml-2 text-sm text-gray-900">{item.status}</span>
+                            <span className="ml-2 text-sm text-white">{item.status}</span>
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-white/60">
                           {item.dueDate ? new Date(item.dueDate).toLocaleDateString() : 'N/A'}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-white/60">
                           {item.order}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                           <div className="flex space-x-2">
                             <button
                               onClick={() => handleEditItem('timeline', item)}
-                              className="text-indigo-600 hover:text-indigo-900"
+                              className="text-blue-400 hover:text-blue-300 transition-colors"
                             >
                               <Edit size={16} />
                             </button>
                             <button
                               onClick={() => handleDeleteItem('timeline', item.id)}
-                              className="text-red-600 hover:text-red-900"
+                              className="text-red-400 hover:text-red-300 transition-colors"
                             >
                               <Trash2 size={16} />
                             </button>
@@ -984,65 +995,65 @@ export default function AdminDashboard() {
             transition={{ duration: 0.5 }}
           >
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold">Event Management</h2>
+              <h2 className="text-2xl font-bold text-white">Event Management</h2>
               <button
                 onClick={() => handleAddItem('event')}
-                className="flex items-center space-x-2 bg-primary-600 text-white px-4 py-2 rounded hover:bg-primary-700"
+                className="flex items-center space-x-2 btn-primary"
               >
                 <Plus size={16} />
                 <span>Add Event</span>
               </button>
             </div>
 
-            <div className="bg-white rounded-lg shadow overflow-hidden">
+            <div className="glass-card overflow-hidden">
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
+                <table className="min-w-full divide-y divide-white/10">
+                  <thead className="bg-white/5">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Event</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Time</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Attendees</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Event</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Date & Time</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Location</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Status</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Attendees</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                  <tbody className="divide-y divide-white/10">
                     {events.map((event) => (
-                      <tr key={event.id}>
+                      <tr key={event.id} className="hover:bg-white/5 transition-colors">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div>
-                            <div className="text-sm font-medium text-gray-900">{event.title}</div>
-                            <div className="text-sm text-gray-500">{event.category}</div>
+                            <div className="text-sm font-medium text-white">{event.title}</div>
+                            <div className="text-sm text-white/60">{event.category}</div>
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">{new Date(event.date).toLocaleDateString()}</div>
-                          <div className="text-sm text-gray-500">{event.time}</div>
+                          <div className="text-sm text-white">{new Date(event.date).toLocaleDateString()}</div>
+                          <div className="text-sm text-white/60">{event.time}</div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-white/60">
                           {event.location}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             {getStatusIcon(event.status)}
-                            <span className="ml-2 text-sm text-gray-900">{event.status}</span>
+                            <span className="ml-2 text-sm text-white">{event.status}</span>
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-white/60">
                           {event.attendees}/{event.capacity}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                           <div className="flex space-x-2">
                             <button
                               onClick={() => handleEditItem('event', event)}
-                              className="text-indigo-600 hover:text-indigo-900"
+                              className="text-blue-400 hover:text-blue-300 transition-colors"
                             >
                               <Edit size={16} />
                             </button>
                             <button
                               onClick={() => handleDeleteItem('event', event.id)}
-                              className="text-red-600 hover:text-red-900"
+                              className="text-red-400 hover:text-red-300 transition-colors"
                             >
                               <Trash2 size={16} />
                             </button>
@@ -1065,18 +1076,18 @@ export default function AdminDashboard() {
             transition={{ duration: 0.5 }}
           >
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold">Team Management</h2>
+              <h2 className="text-2xl font-bold text-white">Team Management</h2>
               <div className="flex space-x-3">
                 <button
                   onClick={() => handleAddItem('team')}
-                  className="flex items-center space-x-2 bg-primary-600 text-white px-4 py-2 rounded hover:bg-primary-700"
+                  className="flex items-center space-x-2 btn-primary"
                 >
                   <Plus size={16} />
                   <span>Add Member</span>
                 </button>
                 <button
                   onClick={() => handleAddDepartment()}
-                  className="flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                  className="flex items-center space-x-2 bg-white/10 hover:bg-white/20 text-white py-2 px-4 rounded border border-white/20 transition-colors"
                 >
                   <Plus size={16} />
                   <span>Add Department</span>
@@ -1084,47 +1095,47 @@ export default function AdminDashboard() {
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow overflow-hidden">
+            <div className="glass-card overflow-hidden">
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
+                <table className="min-w-full divide-y divide-white/10">
+                  <thead className="bg-white/5">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Member</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Department</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Member</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Role</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Department</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Contact</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                  <tbody className="divide-y divide-white/10">
                     {teamMembers.map((member) => (
-                      <tr key={member.id}>
+                      <tr key={member.id} className="hover:bg-white/5 transition-colors">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div>
-                            <div className="text-sm font-medium text-gray-900">{member.user.name}</div>
-                            <div className="text-sm text-gray-500">{member.user.email}</div>
+                            <div className="text-sm font-medium text-white">{member.user.name}</div>
+                            <div className="text-sm text-white/60">{member.user.email}</div>
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-white">
                           {member.role}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-white/60">
                           {member.department}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex space-x-2">
                             {member.linkedin && (
-                              <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-900">
+                              <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition-colors">
                                 <Linkedin size={16} />
                               </a>
                             )}
                             {member.twitter && (
-                              <a href={member.twitter} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-600">
+                              <a href={member.twitter} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition-colors">
                                 <Twitter size={16} />
                               </a>
                             )}
                             {member.email && (
-                              <a href={`mailto:${member.email}`} className="text-gray-600 hover:text-gray-900">
+                              <a href={`mailto:${member.email}`} className="text-white/60 hover:text-white transition-colors">
                                 <Mail size={16} />
                               </a>
                             )}
@@ -1134,13 +1145,13 @@ export default function AdminDashboard() {
                           <div className="flex space-x-2">
                             <button
                               onClick={() => handleEditItem('team', member)}
-                              className="text-indigo-600 hover:text-indigo-900"
+                              className="text-blue-400 hover:text-blue-300 transition-colors"
                             >
                               <Edit size={16} />
                             </button>
                             <button
                               onClick={() => handleDeleteItem('team', member.id)}
-                              className="text-red-600 hover:text-red-900"
+                              className="text-red-400 hover:text-red-300 transition-colors"
                             >
                               <Trash2 size={16} />
                             </button>
@@ -1163,52 +1174,52 @@ export default function AdminDashboard() {
             transition={{ duration: 0.5 }}
           >
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold">Department Management</h2>
+              <h2 className="text-2xl font-bold text-white">Department Management</h2>
               <button
                 onClick={handleAddDepartment}
-                className="flex items-center space-x-2 bg-primary-600 text-white px-4 py-2 rounded hover:bg-primary-700"
+                className="flex items-center space-x-2 btn-primary"
               >
                 <Plus size={16} />
                 <span>Add Department</span>
               </button>
             </div>
 
-            <div className="bg-white rounded-lg shadow overflow-hidden">
+            <div className="glass-card overflow-hidden">
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
+                <table className="min-w-full divide-y divide-white/10">
+                  <thead className="bg-white/5">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Department Name</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Team Members</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Department Name</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Description</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Team Members</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                  <tbody className="divide-y divide-white/10">
                     {departments.map((dept) => {
                       const memberCount = teamMembers.filter(member => member.department === dept.name).length
                       return (
-                        <tr key={dept.id}>
+                        <tr key={dept.id} className="hover:bg-white/5 transition-colors">
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-gray-900">{dept.name}</div>
+                            <div className="text-sm font-medium text-white">{dept.name}</div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-500">{dept.description || 'No description'}</div>
+                            <div className="text-sm text-white/60">{dept.description || 'No description'}</div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-900">{memberCount} member{memberCount !== 1 ? 's' : ''}</div>
+                            <div className="text-sm text-white">{memberCount} member{memberCount !== 1 ? 's' : ''}</div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <div className="flex space-x-2">
                               <button
                                 onClick={() => handleEditDepartment(dept)}
-                                className="text-indigo-600 hover:text-indigo-900"
+                                className="text-blue-400 hover:text-blue-300 transition-colors"
                               >
                                 <Edit size={16} />
                               </button>
                               <button
                                 onClick={() => handleDeleteDepartment(dept.id)}
-                                className="text-red-600 hover:text-red-900"
+                                className="text-red-400 hover:text-red-300 transition-colors"
                               >
                                 <Trash2 size={16} />
                               </button>
@@ -1231,40 +1242,40 @@ export default function AdminDashboard() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-2xl font-bold mb-6">Analytics</h2>
+            <h2 className="text-2xl font-bold mb-6 text-white">Analytics</h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div className="bg-white rounded-lg shadow p-6">
-                <h3 className="text-lg font-semibold mb-4">Event Statistics</h3>
+              <div className="glass-card p-6">
+                <h3 className="text-lg font-semibold mb-4 text-white">Event Statistics</h3>
                 <div className="space-y-4">
                   <div className="flex justify-between">
-                    <span>Total Events</span>
-                    <span className="font-semibold">{events.length}</span>
+                    <span className="text-white/70">Total Events</span>
+                    <span className="font-semibold text-white">{events.length}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Upcoming Events</span>
-                    <span className="font-semibold">{events.filter(e => e.status === 'UPCOMING').length}</span>
+                    <span className="text-white/70">Upcoming Events</span>
+                    <span className="font-semibold text-white">{events.filter(e => e.status === 'UPCOMING').length}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Completed Events</span>
-                    <span className="font-semibold">{events.filter(e => e.status === 'COMPLETED').length}</span>
+                    <span className="text-white/70">Completed Events</span>
+                    <span className="font-semibold text-white">{events.filter(e => e.status === 'COMPLETED').length}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg shadow p-6">
-                <h3 className="text-lg font-semibold mb-4">Timeline Progress</h3>
+              <div className="glass-card p-6">
+                <h3 className="text-lg font-semibold mb-4 text-white">Timeline Progress</h3>
                 <div className="space-y-4">
                   <div className="flex justify-between">
-                    <span>Total Items</span>
-                    <span className="font-semibold">{timelineItems.length}</span>
+                    <span className="text-white/70">Total Items</span>
+                    <span className="font-semibold text-white">{timelineItems.length}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Completed</span>
-                    <span className="font-semibold">{timelineItems.filter(t => t.status === 'COMPLETED').length}</span>
+                    <span className="text-white/70">Completed</span>
+                    <span className="font-semibold text-white">{timelineItems.filter(t => t.status === 'COMPLETED').length}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>In Progress</span>
-                    <span className="font-semibold">{timelineItems.filter(t => t.status === 'IN_PROGRESS').length}</span>
+                    <span className="text-white/70">In Progress</span>
+                    <span className="font-semibold text-white">{timelineItems.filter(t => t.status === 'IN_PROGRESS').length}</span>
                   </div>
                 </div>
               </div>

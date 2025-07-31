@@ -41,21 +41,21 @@ const AdminLogin = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-900 via-primary-800 to-secondary-900 flex items-center justify-center p-4">
+    <div className="min-h-screen gradient-bg flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="bg-white rounded-2xl shadow-2xl p-8"
+          className="glass-card p-8"
         >
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center mx-auto mb-4">
-              <span className="text-white font-bold text-2xl">E</span>
+            <div className="w-16 h-16 bg-gradient-to-r from-white/20 to-white/10 rounded-xl flex items-center justify-center mx-auto mb-4 backdrop-blur-md border border-white/20">
+              <span className="text-white font-bold text-2xl neon-glow">E</span>
             </div>
-            <h1 className="text-2xl font-bold text-gray-800 mb-2">E-Cell Admin</h1>
-            <p className="text-gray-600">Sign in to manage your website</p>
+            <h1 className="text-2xl font-bold text-white mb-2 neon-glow">E-Cell Admin</h1>
+            <p className="text-white/70">Sign in to manage your website</p>
           </div>
 
           {/* Login Form */}
@@ -63,7 +63,7 @@ const AdminLogin = () => {
             <div>
               <label className="form-label">Username</label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60" size={20} />
                 <input
                   type="text"
                   name="username"
@@ -79,7 +79,7 @@ const AdminLogin = () => {
             <div>
               <label className="form-label">Password</label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60" size={20} />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   name="password"
@@ -92,7 +92,7 @@ const AdminLogin = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60 hover:text-white/80 transition-colors"
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
@@ -105,7 +105,7 @@ const AdminLogin = () => {
               className="w-full btn-primary flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? (
-                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
               ) : (
                 <>
                   <span>Sign In</span>
@@ -120,7 +120,7 @@ const AdminLogin = () => {
           <div className="mt-6 text-center">
             <a 
               href="/"
-              className="text-primary-600 hover:text-primary-700 text-sm font-medium"
+              className="text-white/70 hover:text-white text-sm font-medium transition-colors duration-200"
             >
               ← Back to Website
             </a>
