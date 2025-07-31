@@ -42,7 +42,7 @@ const Header = () => {
       transition={{ duration: 0.5 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-white/95 backdrop-blur-md shadow-lg' 
+          ? 'glass-nav shadow-lg' 
           : 'bg-transparent'
       }`}
     >
@@ -50,10 +50,10 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center">
+            <div className="w-10 h-10 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center border border-white/20">
               <span className="text-white font-bold text-xl">E</span>
             </div>
-            <span className={`font-bold text-xl ${isScrolled ? 'text-gray-800' : 'text-white'}`}>
+            <span className="font-bold text-xl text-white">
               E-Cell
             </span>
           </Link>
@@ -64,9 +64,9 @@ const Header = () => {
               <Link
                 key={item.name}
                 href={item.href}
-                className={`font-medium transition-colors duration-300 hover:text-primary-500 ${
-                  isScrolled ? 'text-gray-700' : 'text-white'
-                } ${isActive(item.href) ? 'text-primary-500' : ''}`}
+                className={`font-medium transition-colors duration-300 hover:text-white ${
+                  isActive(item.href) ? 'text-white font-semibold' : 'text-white/70'
+                }`}
               >
                 {item.name}
               </Link>
@@ -76,12 +76,12 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 rounded-lg"
+            className="md:hidden p-2 rounded-lg text-white"
           >
             {isOpen ? (
-              <X className={`w-6 h-6 ${isScrolled ? 'text-gray-800' : 'text-white'}`} />
+              <X className="w-6 h-6" />
             ) : (
-              <Menu className={`w-6 h-6 ${isScrolled ? 'text-gray-800' : 'text-white'}`} />
+              <Menu className="w-6 h-6" />
             )}
           </button>
         </div>
@@ -92,7 +92,7 @@ const Header = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="md:hidden bg-white/95 backdrop-blur-md rounded-lg mt-2 p-4 shadow-lg"
+            className="md:hidden glass-card mt-2 p-4 shadow-lg"
           >
             <nav className="flex flex-col space-y-4">
               {navItems.map((item) => (
@@ -102,8 +102,8 @@ const Header = () => {
                   onClick={() => setIsOpen(false)}
                   className={`text-left font-medium transition-colors duration-300 ${
                     isActive(item.href) 
-                      ? 'text-primary-600' 
-                      : 'text-gray-700 hover:text-primary-500'
+                      ? 'text-white font-semibold' 
+                      : 'text-white/70 hover:text-white'
                   }`}
                 >
                   {item.name}
