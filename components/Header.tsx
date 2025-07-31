@@ -50,7 +50,7 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-gradient-to-r from-primary-500 to-secondary-500 backdrop-blur-md rounded-lg flex items-center justify-center border border-white/20 shadow-lg">
+            <div className="w-10 h-10 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center border border-white/20">
               <span className="text-white font-bold text-xl">E</span>
             </div>
             <span className="font-bold text-xl text-white">

@@ -19,7 +19,7 @@ const Footer = () => {
   }
 
   return (
-    <footer className="bg-gradient-to-r from-primary-800/80 to-secondary-800/80 text-white border-t border-white/10 backdrop-blur-md">
+    <footer className="bg-black/80 text-white border-t border-white/10">
       <div className="container mx-auto px-4 py-16">
         <div className="grid md:grid-cols-4 gap-8">
           {/* Logo and Description */}
@@ -31,7 +31,7 @@ const Footer = () => {
             className="md:col-span-2"
           >
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-r from-primary-500 to-secondary-500 backdrop-blur-md rounded-lg flex items-center justify-center border border-white/20 shadow-lg">
+              <div className="w-10 h-10 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center border border-white/20">
                 <span className="text-white font-bold text-xl">E</span>
               </div>
               <span className="font-bold text-xl text-white">E-Cell</span>
@@ -41,16 +41,16 @@ const Footer = () => {
               Join us in building the future of entrepreneurship.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-white/60 hover:text-white transition-colors hover:scale-110 transform">
+              <a href="#" className="text-white/60 hover:text-white transition-colors">
                 <Facebook size={20} />
               </a>
-              <a href="#" className="text-white/60 hover:text-white transition-colors hover:scale-110 transform">
+              <a href="#" className="text-white/60 hover:text-white transition-colors">
                 <Twitter size={20} />
               </a>
-              <a href="#" className="text-white/60 hover:text-white transition-colors hover:scale-110 transform">
+              <a href="#" className="text-white/60 hover:text-white transition-colors">
                 <Instagram size={20} />
               </a>
-              <a href="#" className="text-white/60 hover:text-white transition-colors hover:scale-110 transform">
+              <a href="#" className="text-white/60 hover:text-white transition-colors">
                 <Linkedin size={20} />
               </a>
             </div>
@@ -131,7 +131,7 @@ const Footer = () => {
           </p>
           <button
             onClick={scrollToTop}
-            className="mt-4 md:mt-0 flex items-center space-x-2 text-white/60 hover:text-white transition-colors hover:scale-110 transform"
+            className="mt-4 md:mt-0 flex items-center space-x-2 text-white/60 hover:text-white transition-colors"
           >
             <span className="text-sm">Back to top</span>
             <ArrowUp size={16} />

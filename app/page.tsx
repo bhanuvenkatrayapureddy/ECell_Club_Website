@@ -8,11 +8,7 @@ import {
   Users,
   Calendar,
   Clock,
-  Target,
-  Star,
-  Zap,
-  TrendingUp,
-  Award
+  Target
 } from 'lucide-react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -69,42 +65,38 @@ export default function Home() {
       title: "Join Our Community",
       description: "Connect with like-minded entrepreneurs and innovators",
       link: "/about",
-      color: "bg-gradient-to-r from-primary-500 to-secondary-500",
-      gradient: "from-blue-500 to-purple-500"
+      color: "bg-white/20"
     },
     {
       icon: Calendar,
       title: "Explore Events",
       description: "Discover exciting events and workshops",
       link: "/events",
-      color: "bg-gradient-to-r from-accent-500 to-success-500",
-      gradient: "from-orange-500 to-green-500"
+      color: "bg-white/20"
     },
     {
       icon: Clock,
       title: "View Timeline",
       description: "See our project progress and milestones",
       link: "/timeline",
-      color: "bg-gradient-to-r from-secondary-500 to-accent-500",
-      gradient: "from-purple-500 to-orange-500"
+      color: "bg-white/20"
     },
     {
       icon: Target,
       title: "Meet Our Team",
       description: "Get to know the passionate people behind E-Cell",
       link: "/team",
-      color: "bg-gradient-to-r from-success-500 to-primary-500",
-      gradient: "from-green-500 to-blue-500"
+      color: "bg-white/20"
     }
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-600 via-secondary-600 to-accent-600">
+    <div className="min-h-screen bg-black">
       <Header />
       
       {/* Hero Section */}
-      <section className="hero-gradient min-h-screen flex items-center justify-center relative overflow-hidden geometric-pattern">
-        <div className="absolute inset-0 bg-black/20"></div>
+      <section className="hero-gradient min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div className="absolute inset-0 bg-black/40"></div>
         <div className="container mx-auto px-4 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 50 }}
@@ -112,24 +104,17 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-center text-white"
           >
-            <motion.div
-              animate={{ rotate: [0, 5, -5, 0] }}
-              transition={{ duration: 4, repeat: Infinity }}
-              className="inline-block mb-6"
-            >
-              <Star className="text-6xl text-yellow-400 animate-pulse-slow" />
-            </motion.div>
             <h1 className="text-5xl md:text-7xl font-bold mb-6 text-shadow">
-              Welcome to <span className="gradient-text neon-glow">E-Cell Club</span>
+              Welcome to <span className="text-white neon-glow">E-Cell Club</span>
             </h1>
             <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-white/90">
               Fostering Innovation, Entrepreneurship, and Leadership in Our College Community
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Link href="/about" className="btn-primary text-lg px-8 py-4 neon-glow shimmer-effect">
+              <Link href="/about" className="btn-primary text-lg px-8 py-4 neon-glow">
                 Learn About Us
               </Link>
-              <Link href="/events" className="btn-outline text-lg px-8 py-4 border-white text-white hover:bg-white hover:text-primary-600 neon-glow">
+              <Link href="/events" className="btn-outline text-lg px-8 py-4 border-white text-white hover:bg-white hover:text-black neon-glow">
                 Explore Events
               </Link>
             </div>
@@ -145,7 +130,7 @@ export default function Home() {
       </section>
 
       {/* Quick Navigation */}
-      <section className="py-20 bg-white/5 backdrop-blur-md">
+      <section className="py-20 bg-black/50">
         <div className="container mx-auto px-4">
           <motion.div 
             initial={{ opacity: 0, y: 50 }}
@@ -154,7 +139,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 gradient-text">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gradient">
               Explore E-Cell
             </h2>
             <p className="text-xl text-white/70 max-w-3xl mx-auto">
@@ -173,7 +158,7 @@ export default function Home() {
               >
                 <Link href={feature.link} className="block">
                   <div className="glass-card p-8 text-center group hover:scale-105 transition-transform duration-300 floating-card">
-                    <div className={`w-16 h-16 ${feature.color} backdrop-blur-md rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 border border-white/20 shadow-lg`}>
+                    <div className={`w-16 h-16 ${feature.color} backdrop-blur-md rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 border border-white/20`}>
                       <feature.icon className="text-white text-2xl" />
                     </div>
                     <h3 className="text-2xl font-bold mb-4 text-white">{feature.title}</h3>
@@ -191,7 +176,7 @@ export default function Home() {
       </section>
 
       {/* Mission Statement */}
-      <section className="py-20 bg-gradient-to-r from-primary-600/20 to-secondary-600/20 backdrop-blur-md">
+      <section className="py-20 bg-black/30">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <motion.div 
@@ -200,19 +185,12 @@ export default function Home() {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <motion.div
-                animate={{ rotate: [0, 10, -10, 0] }}
-                transition={{ duration: 6, repeat: Infinity }}
-                className="inline-block mb-6"
-              >
-                <Zap className="text-5xl text-yellow-400" />
-              </motion.div>
-              <h2 className="text-4xl font-bold mb-6 gradient-text">Our Mission</h2>
+              <h2 className="text-4xl font-bold mb-6 text-gradient">Our Mission</h2>
               <p className="text-xl text-white/70 mb-8 leading-relaxed">
                 To inspire and empower students to become successful entrepreneurs by providing 
                 them with the necessary skills, knowledge, and resources to turn their ideas into reality.
               </p>
-              <Link href="/about" className="btn-primary text-lg px-8 py-4 neon-glow shimmer-effect">
+              <Link href="/about" className="btn-primary text-lg px-8 py-4 neon-glow">
                 Discover Our Story
               </Link>
             </motion.div>
@@ -221,7 +199,7 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 bg-gradient-to-r from-secondary-600/30 to-accent-600/30 backdrop-blur-md">
+      <section className="py-20 bg-black/80 text-white">
         <div className="container mx-auto px-4">
           <motion.div 
             initial={{ opacity: 0, y: 50 }}
@@ -230,14 +208,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <motion.div
-              animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="inline-block mb-6"
-            >
-              <TrendingUp className="text-5xl text-green-400" />
-            </motion.div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 gradient-text">Our Impact</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">Our Impact</h2>
             <p className="text-xl text-white/70 max-w-2xl mx-auto">
               Numbers that reflect our commitment to fostering entrepreneurship
             </p>
@@ -245,10 +216,10 @@ export default function Home() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { number: isLoading ? '...' : stats.totalMembers.toLocaleString(), label: 'Members', icon: Users },
-              { number: isLoading ? '...' : stats.upcomingEvents.toString(), label: 'Events', icon: Calendar },
-              { number: isLoading ? '...' : stats.totalViews.toLocaleString(), label: 'Views', icon: TrendingUp },
-              { number: isLoading ? '...' : stats.completedTasks.toString(), label: 'Tasks', icon: Award }
+              { number: isLoading ? '...' : stats.totalMembers.toLocaleString(), label: 'Members' },
+              { number: isLoading ? '...' : stats.upcomingEvents.toString(), label: 'Events' },
+              { number: isLoading ? '...' : stats.totalViews.toLocaleString(), label: 'Views' },
+              { number: isLoading ? '...' : stats.completedTasks.toString(), label: 'Tasks' }
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}
@@ -258,8 +229,7 @@ export default function Home() {
                 viewport={{ once: true }}
                 className="text-center"
               >
-                <div className="glass-card p-6 hover:scale-105 transition-transform duration-300">
-                  <stat.icon className="text-3xl text-white/80 mx-auto mb-4" />
+                <div className="glass-card p-6">
                   <div className="text-4xl md:text-5xl font-bold mb-2 text-white neon-glow">{stat.number}</div>
                   <div className="text-white/70">{stat.label}</div>
                 </div>
@@ -270,7 +240,7 @@ export default function Home() {
       </section>
 
       {/* Call to Action */}
-      <section className="py-20 bg-gradient-to-r from-accent-600/20 to-success-600/20 backdrop-blur-md">
+      <section className="py-20 bg-black/50">
         <div className="container mx-auto px-4">
           <motion.div 
             initial={{ opacity: 0, y: 50 }}
@@ -280,22 +250,15 @@ export default function Home() {
             className="text-center"
           >
             <div className="glass-card p-12 text-white">
-              <motion.div
-                animate={{ rotate: [0, -5, 5, 0] }}
-                transition={{ duration: 4, repeat: Infinity }}
-                className="inline-block mb-6"
-              >
-                <Star className="text-5xl text-yellow-400" />
-              </motion.div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 gradient-text">Ready to Join the Journey?</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Join the Journey?</h2>
               <p className="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
                 Start your entrepreneurial journey with E-Cell today. Connect, learn, and grow with our community.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/events" className="btn-outline border-white text-white hover:bg-white hover:text-primary-600 text-lg px-8 py-4 neon-glow">
+                <Link href="/events" className="btn-outline border-white text-white hover:bg-white hover:text-black text-lg px-8 py-4 neon-glow">
                   View Events
                 </Link>
-                <Link href="/contact" className="btn-primary text-lg px-8 py-4 neon-glow shimmer-effect">
+                <Link href="/contact" className="bg-white text-black hover:bg-gray-100 font-semibold text-lg px-8 py-4 rounded-lg transition-all duration-300 neon-glow">
                   Contact Us
                 </Link>
               </div>
