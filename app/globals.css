@@ -21,11 +21,11 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl;
+    @apply bg-blue-900/20 backdrop-blur-md border border-blue-400/30 text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl hover:bg-blue-900/30 hover:border-blue-400/50;
   }
   
   .btn-secondary {
-    @apply bg-gray-800 hover:bg-gray-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl;
+    @apply bg-blue-400/20 backdrop-blur-md border border-blue-300/40 text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl hover:bg-blue-400/30 hover:border-blue-300/60;
   }
   
   .btn-outline {
@@ -87,19 +87,65 @@
   }
   
   .glass-nav {
-    left: 50%;
-    margin-left: -45%;
-    width: 90%;
+    place-self: center;
+    width: 80%;
     top: 20px;
     z-index: 100;
     backdrop-filter: blur(8px);
     background: rgba(0, 0, 0, 0.8);
     border: 2px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
+    border-radius: 25px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: slideDown 0.6s ease-out;
   }
   
-  .floating-card {
-    @apply animate-float;
+  .glass-nav:hover {
+    backdrop-filter: blur(12px);
+    background: rgba(0, 0, 0, 0.9);
+    border-color: rgba(59, 130, 246, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+  
+  .nav-link {
+    @apply relative px-4 py-2 text-white/80 hover:text-white transition-all duration-300 ease-out;
+  }
+  
+  .nav-link::before {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 ease-out;
+  }
+  
+  .nav-link:hover::before {
+    @apply w-full;
+  }
+  
+  .nav-link:hover {
+    @apply text-white transform scale-105;
+  }
+  
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
   }
   
   .neon-glow {

@@ -22,7 +22,8 @@ import {
   Twitter,
   Mail,
   Building,
-  LogOut
+  LogOut,
+  Lightbulb
 } from 'lucide-react'
 import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
@@ -94,6 +95,7 @@ export default function AdminDashboard() {
   const [events, setEvents] = useState<Event[]>([])
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([])
   const [departments, setDepartments] = useState<{ id: string; name: string; description?: string }[]>([])
+  const [suggestions, setSuggestions] = useState<any[]>([])
   
   // Modal states
   const [showModal, setShowModal] = useState(false)
@@ -128,12 +130,13 @@ export default function AdminDashboard() {
     setIsLoading(true)
     try {
       // Fetch all data in parallel
-      const [statsRes, timelineRes, eventsRes, teamRes, departmentsRes] = await Promise.all([
+      const [statsRes, timelineRes, eventsRes, teamRes, departmentsRes, suggestionsRes] = await Promise.all([
         fetch('/api/admin/stats'),
         fetch('/api/admin/timeline'),
         fetch('/api/admin/events'),
         fetch('/api/admin/team'),
-        fetch('/api/admin/departments')
+        fetch('/api/admin/departments'),
+        fetch('/api/admin/suggestions')
       ])
 
       if (statsRes.ok) {
@@ -159,6 +162,11 @@ export default function AdminDashboard() {
       if (departmentsRes.ok) {
         const departmentsData = await departmentsRes.json()
         setDepartments(departmentsData.data || [])
+      }
+
+      if (suggestionsRes.ok) {
+        const suggestionsData = await suggestionsRes.json()
+        setSuggestions(suggestionsData.data || [])
       }
     } catch (error) {
       console.error('Failed to fetch dashboard data:', error)
@@ -814,6 +822,7 @@ export default function AdminDashboard() {
               { id: 'events', label: 'Events', icon: Calendar },
               { id: 'team', label: 'Team', icon: Users },
               { id: 'departments', label: 'Departments', icon: Building },
+              { id: 'suggestions', label: 'Suggestions', icon: Lightbulb },
               { id: 'analytics', label: 'Analytics', icon: TrendingUp }
             ].map((tab) => (
               <button
@@ -847,7 +856,8 @@ export default function AdminDashboard() {
                 { label: 'Total Members', value: stats.totalMembers, icon: Users, color: 'bg-blue-500/20 border-blue-500/30' },
                 { label: 'Upcoming Events', value: stats.upcomingEvents, icon: Calendar, color: 'bg-green-500/20 border-green-500/30' },
                 { label: 'Total Views', value: stats.totalViews, icon: Activity, color: 'bg-purple-500/20 border-purple-500/30' },
-                { label: 'Completed Tasks', value: stats.completedTasks, icon: CheckCircle, color: 'bg-orange-500/20 border-orange-500/30' }
+                { label: 'Completed Tasks', value: stats.completedTasks, icon: CheckCircle, color: 'bg-orange-500/20 border-orange-500/30' },
+                { label: 'New Suggestions', value: suggestions.filter(s => s.status === 'PENDING').length, icon: Lightbulb, color: 'bg-yellow-500/20 border-yellow-500/30' }
               ].map((stat, index) => (
                 <div key={stat.label} className="glass-card p-6">
                   <div className="flex items-center">
@@ -1228,6 +1238,144 @@ export default function AdminDashboard() {
                         </tr>
                       )
                     })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Suggestions Tab */}
+        {activeTab === 'suggestions' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-white">Idea Suggestions Management</h2>
+              <div className="flex space-x-2">
+                <select
+                  onChange={(e) => {
+                    const status = e.target.value
+                    if (status) {
+                      fetch(`/api/admin/suggestions?status=${status}`)
+                        .then(res => res.json())
+                        .then(data => setSuggestions(data.data || []))
+                    } else {
+                      fetchDashboardData()
+                    }
+                  }}
+                  className="px-3 py-2 bg-white/10 border border-white/20 rounded text-white text-sm"
+                >
+                  <option value="">All Status</option>
+                  <option value="PENDING">Pending</option>
+                  <option value="UNDER_REVIEW">Under Review</option>
+                  <option value="APPROVED">Approved</option>
+                  <option value="REJECTED">Rejected</option>
+                  <option value="IMPLEMENTED">Implemented</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="glass-card overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-white/10">
+                  <thead className="bg-white/5">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Idea</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Category</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Submitter</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Status</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Date</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/10">
+                    {suggestions.map((suggestion) => (
+                      <tr key={suggestion.id} className="hover:bg-white/5 transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div>
+                            <div className="text-sm font-medium text-white">{suggestion.title}</div>
+                            <div className="text-sm text-white/60 max-w-xs truncate">{suggestion.description}</div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-white/60">
+                          {suggestion.category}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div>
+                            <div className="text-sm text-white">{suggestion.submitterName || 'Anonymous'}</div>
+                            <div className="text-sm text-white/60">{suggestion.submitterEmail || 'No email'}</div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            {getStatusIcon(suggestion.status)}
+                            <span className="ml-2 text-sm text-white">{suggestion.status.replace('_', ' ')}</span>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-white/60">
+                          {new Date(suggestion.createdAt).toLocaleDateString()}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          <div className="flex space-x-2">
+                            <button
+                              onClick={() => {
+                                const newStatus = prompt('Enter new status (PENDING/UNDER_REVIEW/APPROVED/REJECTED/IMPLEMENTED):', suggestion.status)
+                                if (newStatus && ['PENDING', 'UNDER_REVIEW', 'APPROVED', 'REJECTED', 'IMPLEMENTED'].includes(newStatus)) {
+                                  const adminNotes = prompt('Enter admin notes (optional):', suggestion.adminNotes || '')
+                                  fetch(`/api/admin/suggestions/${suggestion.id}`, {
+                                    method: 'PUT',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ status: newStatus, adminNotes })
+                                  })
+                                  .then(response => response.json())
+                                  .then(data => {
+                                    if (data.success) {
+                                      toast.success('Suggestion updated successfully')
+                                      fetchDashboardData()
+                                    } else {
+                                      toast.error('Failed to update suggestion')
+                                    }
+                                  })
+                                  .catch(error => {
+                                    console.error('Error updating suggestion:', error)
+                                    toast.error('Failed to update suggestion')
+                                  })
+                                }
+                              }}
+                              className="text-blue-400 hover:text-blue-300 transition-colors"
+                            >
+                              <Edit size={16} />
+                            </button>
+                            <button
+                              onClick={() => {
+                                if (confirm('Are you sure you want to delete this suggestion?')) {
+                                  fetch(`/api/admin/suggestions/${suggestion.id}`, { method: 'DELETE' })
+                                  .then(response => response.json())
+                                  .then(data => {
+                                    if (data.success) {
+                                      toast.success('Suggestion deleted successfully')
+                                      fetchDashboardData()
+                                    } else {
+                                      toast.error('Failed to delete suggestion')
+                                    }
+                                  })
+                                  .catch(error => {
+                                    console.error('Error deleting suggestion:', error)
+                                    toast.error('Failed to delete suggestion')
+                                  })
+                                }
+                              }}
+                              className="text-red-400 hover:text-red-300 transition-colors"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

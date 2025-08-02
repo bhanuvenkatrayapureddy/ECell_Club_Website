@@ -25,6 +25,7 @@ const Header = () => {
     { name: 'Timeline', href: '/timeline' },
     { name: 'Team', href: '/team' },
     { name: 'Events', href: '/events' },
+    { name: 'Suggestions', href: '/suggestions' },
     { name: 'Contact', href: '/contact' },
   ]
 
@@ -40,7 +41,7 @@ const Header = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
-      className={`fixed transition-all duration-500 ${
+      className={`fixed transition-all duration-200 ${
         isScrolled 
           ? 'glass-nav shadow-lg' 
           : 'bg-transparent top-0 left-0 right-0 z-50'

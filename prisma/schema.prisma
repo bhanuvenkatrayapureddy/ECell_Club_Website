@@ -209,6 +209,22 @@ model EventAnalytics {
   @@map("event_analytics")
 }
 
+// Idea Suggestions
+model IdeaSuggestion {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  category    String
+  submitterName String?
+  submitterEmail String?
+  status      IdeaStatus @default(PENDING)
+  adminNotes  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("idea_suggestions")
+}
+
 // Enums
 enum UserRole {
   ADMIN
@@ -241,4 +257,12 @@ enum ProjectStatus {
   IN_PROGRESS
   COMPLETED
   ON_HOLD
+}
+
+enum IdeaStatus {
+  PENDING
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+  IMPLEMENTED
 }
