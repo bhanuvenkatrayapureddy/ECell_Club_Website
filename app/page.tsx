@@ -12,6 +12,8 @@ import {
 } from 'lucide-react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import StarField from '@/components/StarField'
+import SpaceEffects from '@/components/SpaceEffects'
 import Link from 'next/link'
 
 interface DashboardStats {
@@ -95,7 +97,9 @@ export default function Home() {
       <Header />
       
       {/* Hero Section */}
-      <section className="hero-gradient min-h-screen flex items-center justify-center relative overflow-hidden">
+      <section className="cosmic-gradient min-h-screen flex items-center justify-center relative overflow-hidden">
+        <StarField />
+        <SpaceEffects />
         <div className="absolute inset-0 bg-black/40"></div>
         <div className="container mx-auto px-4 relative z-10">
           <motion.div 
@@ -104,11 +108,11 @@ export default function Home() {
             transition={{ duration: 0.5 }}
             className="text-center text-white"
           >
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-shadow">
-              Welcome to <span className="text-white neon-glow">E-Cell Club</span>
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-shadow animate-float-space">
+              Welcome to <span className="text-white space-glow">E-Cell Club</span>
             </h1>
-            <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-white/90">
-              Fostering Innovation, Entrepreneurship, and Leadership in Our College Community
+            <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-white/90 animate-twinkle">
+              Exploring the Universe of Innovation, Entrepreneurship, and Leadership
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <Link href="/about" className="btn-primary text-lg px-8 py-4 neon-glow">
