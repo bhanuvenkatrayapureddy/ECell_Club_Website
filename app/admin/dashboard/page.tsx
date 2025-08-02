@@ -23,7 +23,8 @@ import {
   Mail,
   Building,
   LogOut,
-  Lightbulb
+  Lightbulb,
+  Settings
 } from 'lucide-react'
 import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
@@ -96,6 +97,7 @@ export default function AdminDashboard() {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([])
   const [departments, setDepartments] = useState<{ id: string; name: string; description?: string }[]>([])
   const [suggestions, setSuggestions] = useState<any[]>([])
+  const [clubInfo, setClubInfo] = useState<any[]>([])
   
   // Modal states
   const [showModal, setShowModal] = useState(false)
@@ -130,13 +132,14 @@ export default function AdminDashboard() {
     setIsLoading(true)
     try {
       // Fetch all data in parallel
-      const [statsRes, timelineRes, eventsRes, teamRes, departmentsRes, suggestionsRes] = await Promise.all([
+      const [statsRes, timelineRes, eventsRes, teamRes, departmentsRes, suggestionsRes, clubInfoRes] = await Promise.all([
         fetch('/api/admin/stats'),
         fetch('/api/admin/timeline'),
         fetch('/api/admin/events'),
         fetch('/api/admin/team'),
         fetch('/api/admin/departments'),
-        fetch('/api/admin/suggestions')
+        fetch('/api/admin/suggestions'),
+        fetch('/api/admin/club-info')
       ])
 
       if (statsRes.ok) {
@@ -167,6 +170,11 @@ export default function AdminDashboard() {
       if (suggestionsRes.ok) {
         const suggestionsData = await suggestionsRes.json()
         setSuggestions(suggestionsData.data || [])
+      }
+
+      if (clubInfoRes.ok) {
+        const clubInfoData = await clubInfoRes.json()
+        setClubInfo(clubInfoData.data || [])
       }
     } catch (error) {
       console.error('Failed to fetch dashboard data:', error)
@@ -823,6 +831,7 @@ export default function AdminDashboard() {
               { id: 'team', label: 'Team', icon: Users },
               { id: 'departments', label: 'Departments', icon: Building },
               { id: 'suggestions', label: 'Suggestions', icon: Lightbulb },
+              { id: 'settings', label: 'Settings', icon: Settings },
               { id: 'analytics', label: 'Analytics', icon: TrendingUp }
             ].map((tab) => (
               <button
@@ -1378,6 +1387,173 @@ export default function AdminDashboard() {
                     ))}
                   </tbody>
                 </table>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Settings Tab */}
+        {activeTab === 'settings' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-white">Club Information Settings</h2>
+              <button
+                onClick={() => {
+                  const key = prompt('Enter information key (e.g., email, phone, address):')
+                  if (!key) return
+                  
+                  const value = prompt('Enter the value:')
+                  if (!value) return
+                  
+                  const description = prompt('Enter description (optional):')
+                  
+                  fetch('/api/admin/club-info', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key, value, description })
+                  })
+                  .then(response => response.json())
+                  .then(data => {
+                    if (data.success) {
+                      toast.success('Club information added successfully')
+                      fetchDashboardData()
+                    } else {
+                      toast.error(data.error || 'Failed to add club information')
+                    }
+                  })
+                  .catch(error => {
+                    console.error('Error adding club info:', error)
+                    toast.error('Failed to add club information')
+                  })
+                }}
+                className="flex items-center space-x-2 btn-primary"
+              >
+                <Plus size={16} />
+                <span>Add Info</span>
+              </button>
+            </div>
+
+            <div className="glass-card overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-white/10">
+                  <thead className="bg-white/5">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Key</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Value</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Description</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Last Updated</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/10">
+                    {clubInfo.map((info) => (
+                      <tr key={info.id} className="hover:bg-white/5 transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-medium text-white">{info.key}</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-white/80">{info.value}</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-white/60">{info.description || 'No description'}</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-white/60">
+                          {new Date(info.updatedAt).toLocaleDateString()}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          <div className="flex space-x-2">
+                            <button
+                              onClick={() => {
+                                const newKey = prompt('Enter new key:', info.key)
+                                if (!newKey) return
+                                
+                                const newValue = prompt('Enter new value:', info.value)
+                                if (!newValue) return
+                                
+                                const newDescription = prompt('Enter new description (optional):', info.description || '')
+                                
+                                fetch(`/api/admin/club-info/${info.id}`, {
+                                  method: 'PUT',
+                                  headers: { 'Content-Type': 'application/json' },
+                                  body: JSON.stringify({ key: newKey, value: newValue, description: newDescription })
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                  if (data.success) {
+                                    toast.success('Club information updated successfully')
+                                    fetchDashboardData()
+                                  } else {
+                                    toast.error(data.error || 'Failed to update club information')
+                                  }
+                                })
+                                .catch(error => {
+                                  console.error('Error updating club info:', error)
+                                  toast.error('Failed to update club information')
+                                })
+                              }}
+                              className="text-blue-400 hover:text-blue-300 transition-colors"
+                            >
+                              <Edit size={16} />
+                            </button>
+                            <button
+                              onClick={() => {
+                                if (confirm('Are you sure you want to delete this club information?')) {
+                                  fetch(`/api/admin/club-info/${info.id}`, { method: 'DELETE' })
+                                  .then(response => response.json())
+                                  .then(data => {
+                                    if (data.success) {
+                                      toast.success('Club information deleted successfully')
+                                      fetchDashboardData()
+                                    } else {
+                                      toast.error(data.error || 'Failed to delete club information')
+                                    }
+                                  })
+                                  .catch(error => {
+                                    console.error('Error deleting club info:', error)
+                                    toast.error('Failed to delete club information')
+                                  })
+                                }
+                              }}
+                              className="text-red-400 hover:text-red-300 transition-colors"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div className="mt-8 glass-card p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">Quick Setup</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <p className="text-sm text-white/70">Common club information keys:</p>
+                  <ul className="text-sm text-white/60 space-y-1">
+                    <li>• <code className="bg-white/10 px-1 rounded">email</code> - Club email address</li>
+                    <li>• <code className="bg-white/10 px-1 rounded">phone</code> - Contact phone number</li>
+                    <li>• <code className="bg-white/10 px-1 rounded">address</code> - Club address</li>
+                    <li>• <code className="bg-white/10 px-1 rounded">website</code> - Club website</li>
+                    <li>• <code className="bg-white/10 px-1 rounded">social_media</code> - Social media links</li>
+                    <li>• <code className="bg-white/10 px-1 rounded">meeting_time</code> - Regular meeting schedule</li>
+                  </ul>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-sm text-white/70">Usage:</p>
+                  <ul className="text-sm text-white/60 space-y-1">
+                    <li>• Add new information using the "Add Info" button</li>
+                    <li>• Edit existing information using the edit icon</li>
+                    <li>• Delete information using the delete icon</li>
+                    <li>• This information can be displayed on your website</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </motion.div>

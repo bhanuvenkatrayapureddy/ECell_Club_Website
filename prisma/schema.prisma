@@ -225,6 +225,17 @@ model IdeaSuggestion {
   @@map("idea_suggestions")
 }
 
+// Club Information
+model ClubInfo {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String
+  description String?
+  updatedAt   DateTime @updatedAt
+
+  @@map("club_info")
+}
+
 // Enums
 enum UserRole {
   ADMIN
