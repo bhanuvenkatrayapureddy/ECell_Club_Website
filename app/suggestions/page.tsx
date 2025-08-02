@@ -136,7 +136,7 @@ export default function SuggestionsPage() {
         const data = await response.json()
         setSuggestions(data.data || [])
         if (data.data?.length === 0) {
-          toast.info('No suggestions found for this email address')
+          toast.success('No suggestions found for this email address')
         }
       } else {
         toast.error('Failed to fetch suggestions')
