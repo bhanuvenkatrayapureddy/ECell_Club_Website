@@ -102,16 +102,11 @@ export default function Home() {
         <SpaceEffects />
         <div className="absolute inset-0 bg-black/40"></div>
         <div className="container mx-auto px-4 relative z-10">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
-            transition={{ duration: 0.5 }}
-            className="text-center text-white"
-          >
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-shadow animate-float-space">
+          <div className="text-center text-white">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-shadow">
               Welcome to <span className="text-white space-glow">E-Cell Club</span>
             </h1>
-            <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-white/90 animate-twinkle">
+            <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-white/90">
               Exploring the Universe of Innovation, Entrepreneurship, and Leadership
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
@@ -122,7 +117,7 @@ export default function Home() {
                 Explore Events
               </Link>
             </div>
-          </motion.div>
+          </div>
         </div>
         <motion.div 
           animate={{ y: [0, -5, 0] }}

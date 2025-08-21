@@ -4,6 +4,8 @@ import { motion } from 'framer-motion'
 import { Calendar, Clock, MapPin, Users, ArrowRight, ArrowLeft, Filter } from 'lucide-react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import StarField from '@/components/StarField'
+import SpaceEffects from '@/components/SpaceEffects'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 
@@ -116,6 +118,8 @@ export default function Events() {
       
       {/* Hero Section */}
       <section className="hero-gradient min-h-screen flex items-center justify-center relative overflow-hidden">
+        <StarField />
+        <SpaceEffects />
         <div className="absolute inset-0 bg-black/40"></div>
         <div className="container mx-auto px-4 relative z-10">
           <motion.div 

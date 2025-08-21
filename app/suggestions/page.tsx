@@ -2,8 +2,13 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Lightbulb, Send, CheckCircle, Clock, AlertCircle, XCircle, Eye } from 'lucide-react'
+import { Lightbulb, Send, CheckCircle, Clock, AlertCircle, XCircle, Eye, ArrowLeft } from 'lucide-react'
 import { toast } from 'react-hot-toast'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
+import StarField from '@/components/StarField'
+import SpaceEffects from '@/components/SpaceEffects'
+import Link from 'next/link'
 
 interface IdeaSuggestion {
   id: string
@@ -150,25 +155,43 @@ export default function SuggestionsPage() {
   }
 
   return (
-    <div className="min-h-screen gradient-bg pt-20">
-      <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12"
-        >
-          <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20">
-              <Lightbulb className="text-white" size={32} />
+    <div className="min-h-screen bg-black">
+      <Header />
+      
+      {/* Hero Section */}
+      <section className="hero-gradient min-h-screen flex items-center justify-center relative overflow-hidden">
+        <StarField />
+        <SpaceEffects />
+        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center text-white"
+          >
+            <Link href="/" className="inline-flex items-center text-white/80 hover:text-white mb-8 transition-colors text-shadow">
+              <ArrowLeft size={20} className="mr-2" />
+              Back to Home
+            </Link>
+            <div className="flex justify-center mb-6">
+              <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 neon-glow">
+                <Lightbulb className="text-white" size={32} />
+              </div>
             </div>
-          </div>
-          <h1 className="text-4xl font-bold text-white mb-4">Idea Suggestions</h1>
-          <p className="text-xl text-white/70 max-w-2xl mx-auto">
-            Share your innovative ideas with the E-Cell team. We value your input and are always looking for new ways to enhance our community.
-          </p>
-        </motion.div>
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-shadow">
+              <span className="text-white neon-glow">Dumpbox</span>
+            </h1>
+            <p className="text-xl md:text-2xl max-w-3xl mx-auto text-white/90 text-shadow">
+              Drop your wildest ideas, feedback, or random thoughts here. This is your creative dumpbox - no filters, just pure innovation!
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Main Content */}
+      <section className="py-20 bg-black/50">
+        <div className="container mx-auto px-4">
 
         {/* Navigation Tabs */}
         <div className="flex justify-center mb-8">
@@ -182,7 +205,7 @@ export default function SuggestionsPage() {
                     : 'text-white/70 hover:text-white'
                 }`}
               >
-                Submit Idea
+Dump Ideas
               </button>
               <button
                 onClick={() => setActiveTab('track')}
@@ -192,7 +215,7 @@ export default function SuggestionsPage() {
                     : 'text-white/70 hover:text-white'
                 }`}
               >
-                Track Ideas
+                Track Dumps
               </button>
             </div>
           </div>
@@ -207,19 +230,19 @@ export default function SuggestionsPage() {
             className="max-w-2xl mx-auto"
           >
             <div className="glass-card p-8">
-              <h2 className="text-2xl font-bold text-white mb-6">Submit Your Idea</h2>
+              <h2 className="text-2xl font-bold text-white mb-6">🗑️ Dump Your Idea</h2>
               
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-white mb-2">
-                    Idea Title *
+                    What's on your mind? *
                   </label>
                   <input
                     type="text"
                     value={formData.title}
                     onChange={(e) => setFormData({...formData, title: e.target.value})}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 transition-colors"
-                    placeholder="Enter a catchy title for your idea"
+                    placeholder="Give your idea a crazy title..."
                     required
                   />
                 </div>
@@ -252,7 +275,7 @@ export default function SuggestionsPage() {
                     onChange={(e) => setFormData({...formData, description: e.target.value})}
                     rows={5}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 transition-colors resize-none"
-                    placeholder="Describe your idea in detail. What problem does it solve? How would it benefit the E-Cell community?"
+                    placeholder="Dump all your thoughts here... crazy ideas, feedback, complaints, dreams - anything goes!"
                     required
                   />
                 </div>
@@ -267,7 +290,7 @@ export default function SuggestionsPage() {
                       value={formData.submitterName}
                       onChange={(e) => setFormData({...formData, submitterName: e.target.value})}
                       className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 transition-colors"
-                      placeholder="Your name"
+                      placeholder="Anonymous dumper or real name?"
                     />
                   </div>
 
@@ -287,7 +310,7 @@ export default function SuggestionsPage() {
 
                 <div className="bg-white/5 p-4 rounded-lg">
                   <p className="text-sm text-white/70">
-                    💡 <strong>Tip:</strong> Providing your email allows us to notify you about the status of your idea and potentially reach out for more details.
+                    🗑️ <strong>Dumpbox Rules:</strong> No idea is too weird, no feedback is too harsh. We read everything and love the chaos. Leave your email if you want updates on your dump!
                   </p>
                 </div>
 
@@ -299,12 +322,12 @@ export default function SuggestionsPage() {
                   {isSubmitting ? (
                     <>
                       <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                      <span>Submitting...</span>
+                      <span>Dumping...</span>
                     </>
                   ) : (
                     <>
                       <Send size={20} />
-                      <span>Submit Idea</span>
+                      <span>Dump It!</span>
                     </>
                   )}
                 </button>
@@ -394,7 +417,10 @@ export default function SuggestionsPage() {
             </div>
           </motion.div>
         )}
-      </div>
+        </div>
+      </section>
+
+      <Footer />
     </div>
   )
 } 
