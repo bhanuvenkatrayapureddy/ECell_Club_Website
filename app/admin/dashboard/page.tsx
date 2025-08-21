@@ -36,7 +36,8 @@ import {
   Eye,
   Monitor,
   Smartphone,
-  Tablet
+  Tablet,
+  User
 } from 'lucide-react'
 import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
