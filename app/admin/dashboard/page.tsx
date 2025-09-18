@@ -37,7 +37,8 @@ import {
   Monitor,
   Smartphone,
   Tablet,
-  User
+  User,
+  Megaphone
 } from 'lucide-react'
 import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
@@ -95,6 +96,16 @@ interface TeamMember {
   }
 }
 
+interface Announcement {
+  id: string
+  title: string
+  content: string
+  isActive: boolean
+  priority: number
+  createdAt: string
+  updatedAt: string
+}
+
 export default function AdminDashboard() {
   const router = useRouter()
   const [activeTab, setActiveTab] = useState('overview')
@@ -111,10 +122,11 @@ export default function AdminDashboard() {
   const [departments, setDepartments] = useState<{ id: string; name: string; description?: string }[]>([])
   const [suggestions, setSuggestions] = useState<any[]>([])
   const [clubInfo, setClubInfo] = useState<any[]>([])
+  const [announcements, setAnnouncements] = useState<Announcement[]>([])
   
   // Modal states
   const [showModal, setShowModal] = useState(false)
-  const [modalType, setModalType] = useState<'timeline' | 'event' | 'team' | null>(null)
+  const [modalType, setModalType] = useState<'timeline' | 'event' | 'team' | 'announcement' | null>(null)
   const [editingItem, setEditingItem] = useState<any>(null)
   const [formData, setFormData] = useState<any>({})
   
@@ -194,14 +206,15 @@ export default function AdminDashboard() {
     setIsLoading(true)
     try {
       // Fetch all data in parallel
-      const [statsRes, timelineRes, eventsRes, teamRes, departmentsRes, suggestionsRes, clubInfoRes] = await Promise.all([
+      const [statsRes, timelineRes, eventsRes, teamRes, departmentsRes, suggestionsRes, clubInfoRes, announcementsRes] = await Promise.all([
         fetch('/api/admin/stats'),
         fetch('/api/admin/timeline'),
         fetch('/api/admin/events'),
         fetch('/api/admin/team'),
         fetch('/api/admin/departments'),
         fetch('/api/admin/suggestions'),
-        fetch('/api/admin/club-info')
+        fetch('/api/admin/club-info'),
+        fetch('/api/admin/announcements')
       ])
 
       if (statsRes.ok) {
@@ -238,6 +251,11 @@ export default function AdminDashboard() {
         const clubInfoData = await clubInfoRes.json()
         setClubInfo(clubInfoData.data || [])
       }
+
+      if (announcementsRes.ok) {
+        const announcementsData = await announcementsRes.json()
+        setAnnouncements(announcementsData.data || [])
+      }
     } catch (error) {
       console.error('Failed to fetch dashboard data:', error)
       toast.error('Failed to load dashboard data')
@@ -246,7 +264,7 @@ export default function AdminDashboard() {
     }
   }
 
-  const handleAddItem = (type: 'timeline' | 'event' | 'team') => {
+  const handleAddItem = (type: 'timeline' | 'event' | 'team' | 'announcement') => {
     setModalType(type)
     setEditingItem(null)
     // Set formData to only the correct fields for each type
@@ -282,11 +300,18 @@ export default function AdminDashboard() {
         order: '',
         completedAt: ''
       })
+    } else if (type === 'announcement') {
+      setFormData({
+        title: '',
+        content: '',
+        isActive: true,
+        priority: 0
+      })
     }
     setShowModal(true)
   }
 
-  const handleEditItem = (type: 'timeline' | 'event' | 'team', item: any) => {
+  const handleEditItem = (type: 'timeline' | 'event' | 'team' | 'announcement', item: any) => {
     setModalType(type)
     setEditingItem(item)
     if (type === 'event') {
@@ -321,11 +346,18 @@ export default function AdminDashboard() {
         order: item.order || '',
         completedAt: item.completedAt || ''
       })
+    } else if (type === 'announcement') {
+      setFormData({
+        title: item.title || '',
+        content: item.content || '',
+        isActive: item.isActive !== undefined ? item.isActive : true,
+        priority: item.priority || 0
+      })
     }
     setShowModal(true)
   }
 
-  const handleDeleteItem = async (type: 'timeline' | 'event' | 'team', id: string) => {
+  const handleDeleteItem = async (type: 'timeline' | 'event' | 'team' | 'announcement', id: string) => {
     if (!confirm('Are you sure you want to delete this item?')) return
 
     try {
@@ -336,6 +368,8 @@ export default function AdminDashboard() {
         response = await fetch(`/api/admin/events/${id}`, { method: 'DELETE' })
       } else if (type === 'team') {
         response = await fetch(`/api/admin/team/${id}`, { method: 'DELETE' })
+      } else if (type === 'announcement') {
+        response = await fetch(`/api/admin/announcements/${id}`, { method: 'DELETE' })
       }
 
       if (response?.ok) {
@@ -469,6 +503,8 @@ export default function AdminDashboard() {
       requiredFields.push('dueDate')
     } else if (modalType === 'team') {
       requiredFields.push('name', 'email', 'role', 'department')
+    } else if (modalType === 'announcement') {
+      requiredFields.push('content')
     }
 
     const missingFields = requiredFields.filter(field => !formData[field])
@@ -481,6 +517,7 @@ export default function AdminDashboard() {
       let response
       const url = modalType === 'timeline' ? '/api/admin/timeline' : 
                  modalType === 'event' ? '/api/admin/events' : 
+                 modalType === 'announcement' ? '/api/admin/announcements' :
                  '/api/admin/team'
 
       if (editingItem) {
@@ -811,6 +848,55 @@ export default function AdminDashboard() {
                 </div>
               </>
             )}
+
+            {modalType === 'announcement' && (
+              <>
+                <div>
+                  <label className="form-label">Title *</label>
+                  <input
+                    type="text"
+                    value={formData.title || ''}
+                    onChange={(e) => setFormData({...formData, title: e.target.value})}
+                    className="form-input"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="form-label">Content *</label>
+                  <textarea
+                    value={formData.content || ''}
+                    onChange={(e) => setFormData({...formData, content: e.target.value})}
+                    className="form-input"
+                    rows={4}
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="form-label">Priority</label>
+                  <input
+                    type="number"
+                    value={formData.priority || 0}
+                    onChange={(e) => setFormData({...formData, priority: parseInt(e.target.value) || 0})}
+                    className="form-input"
+                    min="0"
+                    max="10"
+                  />
+                  <p className="text-xs text-white/60 mt-1">Higher numbers appear first (0-10)</p>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-white">Active</span>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input 
+                      type="checkbox" 
+                      checked={formData.isActive !== false}
+                      onChange={(e) => setFormData({...formData, isActive: e.target.checked})}
+                      className="sr-only peer" 
+                    />
+                    <div className="w-11 h-6 bg-white/20 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                  </label>
+                </div>
+              </>
+            )}
           </div>
 
           <div className="flex justify-end space-x-3 mt-6">
@@ -889,6 +975,7 @@ export default function AdminDashboard() {
             <div className="flex space-x-8 min-w-max">
               {[
                 { id: 'overview', label: 'Overview', icon: BarChart3 },
+                { id: 'announcements', label: 'Announcements', icon: Megaphone },
                 { id: 'timeline', label: 'Timeline', icon: Clock },
                 { id: 'events', label: 'Events', icon: Calendar },
                 { id: 'team', label: 'Team', icon: Users },
@@ -935,6 +1022,7 @@ export default function AdminDashboard() {
                 { label: 'Upcoming Events', value: stats.upcomingEvents, icon: Calendar, color: 'bg-green-500/20 border-green-500/30' },
                 { label: 'Total Views', value: stats.totalViews, icon: Activity, color: 'bg-purple-500/20 border-purple-500/30' },
                 { label: 'Completed Tasks', value: stats.completedTasks, icon: CheckCircle, color: 'bg-orange-500/20 border-orange-500/30' },
+                { label: 'Active Announcements', value: announcements.filter(a => a.isActive).length, icon: Megaphone, color: 'bg-cyan-500/20 border-cyan-500/30' },
                 { label: 'New Suggestions', value: suggestions.filter(s => s.status === 'PENDING').length, icon: Lightbulb, color: 'bg-yellow-500/20 border-yellow-500/30' }
               ].map((stat, index) => (
                 <div key={stat.label} className="glass-card p-6">
@@ -993,7 +1081,94 @@ export default function AdminDashboard() {
                     <Plus size={16} />
                     <span>Add Team Member</span>
                   </button>
+                  <button
+                    onClick={() => handleAddItem('announcement')}
+                    className="w-full flex items-center justify-center space-x-2 bg-white/10 hover:bg-white/20 text-white py-2 px-4 rounded border border-white/20 transition-colors"
+                  >
+                    <Plus size={16} />
+                    <span>Add Announcement</span>
+                  </button>
                 </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Announcements Tab */}
+        {activeTab === 'announcements' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-white">Announcements Management</h2>
+              <button
+                onClick={() => handleAddItem('announcement')}
+                className="flex items-center space-x-2 btn-primary"
+              >
+                <Plus size={16} />
+                <span>Add Announcement</span>
+              </button>
+            </div>
+
+            <div className="glass-card overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-white/10">
+                  <thead className="bg-white/5">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Title</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Content</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Status</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Priority</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Created</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/10">
+                    {announcements.map((announcement) => (
+                      <tr key={announcement.id} className="hover:bg-white/5 transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-medium text-white">{announcement.title}</div>
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="text-sm text-white/60 max-w-xs truncate">{announcement.content}</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                            announcement.isActive 
+                              ? 'bg-green-500/20 text-green-400' 
+                              : 'bg-red-500/20 text-red-400'
+                          }`}>
+                            {announcement.isActive ? 'Active' : 'Inactive'}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-white/60">
+                          {announcement.priority}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-white/60">
+                          {new Date(announcement.createdAt).toLocaleDateString()}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          <div className="flex space-x-2">
+                            <button
+                              onClick={() => handleEditItem('announcement', announcement)}
+                              className="text-blue-400 hover:text-blue-300 transition-colors"
+                            >
+                              <Edit size={16} />
+                            </button>
+                            <button
+                              onClick={() => handleDeleteItem('announcement', announcement.id)}
+                              className="text-red-400 hover:text-red-300 transition-colors"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
           </motion.div>

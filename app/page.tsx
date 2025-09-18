@@ -8,7 +8,9 @@ import {
   Users,
   Calendar,
   Clock,
-  Target
+  Target,
+  Megaphone,
+  X
 } from 'lucide-react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -23,6 +25,16 @@ interface DashboardStats {
   completedTasks: number
 }
 
+interface Announcement {
+  id: string
+  title: string
+  content: string
+  isActive: boolean
+  priority: number
+  createdAt: string
+  updatedAt: string
+}
+
 export default function Home() {
   const [isVisible, setIsVisible] = useState(false)
   const [stats, setStats] = useState<DashboardStats>({
@@ -31,11 +43,14 @@ export default function Home() {
     totalViews: 0,
     completedTasks: 0
   })
+  const [announcements, setAnnouncements] = useState<Announcement[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [dismissedAnnouncements, setDismissedAnnouncements] = useState<string[]>([])
 
   useEffect(() => {
     setIsVisible(true)
     fetchStats()
+    fetchAnnouncements()
     const interval = setInterval(fetchStats, 30000) // Poll every 30 seconds
     return () => clearInterval(interval)
   }, [])
@@ -59,6 +74,23 @@ export default function Home() {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const fetchAnnouncements = async () => {
+    try {
+      const response = await fetch('/api/announcements?limit=3')
+      if (response.ok) {
+        const data = await response.json()
+        setAnnouncements(data.data || [])
+      }
+    } catch (error) {
+      console.error('Failed to fetch announcements:', error)
+      setAnnouncements([])
+    }
+  }
+
+  const dismissAnnouncement = (id: string) => {
+    setDismissedAnnouncements(prev => [...prev, id])
   }
 
   const features = [
@@ -127,6 +159,73 @@ export default function Home() {
           <ChevronDown className="text-white text-4xl" />
         </motion.div>
       </section>
+
+      {/* Announcements Section */}
+      {announcements.length > 0 && (
+        <section className="py-16 bg-black/30">
+          <div className="container mx-auto px-4">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gradient flex items-center justify-center gap-3">
+                <Megaphone className="text-white" size={32} />
+                Latest Updates
+              </h2>
+              <p className="text-lg text-white/70">
+                Stay informed about recent announcements and updates
+              </p>
+            </motion.div>
+
+            <div className="grid gap-6 max-w-4xl mx-auto">
+              {announcements
+                .filter(announcement => !dismissedAnnouncements.includes(announcement.id))
+                .map((announcement, index) => (
+                <motion.div
+                  key={announcement.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="glass-card p-6 relative border-l-4 border-l-blue-400"
+                >
+                  <button
+                    onClick={() => dismissAnnouncement(announcement.id)}
+                    className="absolute top-4 right-4 text-white/50 hover:text-white transition-colors"
+                  >
+                    <X size={20} />
+                  </button>
+                  
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 bg-blue-500/20 backdrop-blur-md rounded-full flex items-center justify-center border border-blue-400/30">
+                      <Megaphone className="text-blue-400" size={20} />
+                    </div>
+                    
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold mb-2 text-white">
+                        {announcement.title}
+                      </h3>
+                      <p className="text-white/80 leading-relaxed mb-3">
+                        {announcement.content}
+                      </p>
+                      <div className="text-sm text-white/50">
+                        {new Date(announcement.createdAt).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric'
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Quick Navigation */}
       <section className="py-20 bg-black/50">

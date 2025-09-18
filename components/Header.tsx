@@ -55,7 +55,7 @@ const Header = () => {
               <span className="text-white font-bold text-xl">E</span>
             </div>
             <span className="font-bold text-xl text-white">
-              E-Cell
+              E-Cell Club
             </span>
           </Link>
 

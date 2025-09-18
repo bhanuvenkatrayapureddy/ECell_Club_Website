@@ -47,13 +47,13 @@ export default function Contact() {
     {
       icon: Mail,
       title: "Email",
-      value: "ecell@college.edu",
+      value: "ecell@lbrce.ac.in",
       description: "Send us an email anytime"
     },
     {
       icon: Phone,
       title: "Phone",
-      value: "+1 (555) 123-4567",
+      value: "+91 93929 59267",
       description: "Call us during business hours"
     },
     {

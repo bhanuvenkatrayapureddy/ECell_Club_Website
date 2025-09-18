@@ -104,11 +104,11 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center">
                 <Mail className="text-white/60 mr-3" size={16} />
-                <span className="text-white/70">ecell@college.edu</span>
+                <span className="text-white/70">ecell@lbrce.ac.in</span>
               </div>
               <div className="flex items-center">
                 <Phone className="text-white/60 mr-3" size={16} />
-                <span className="text-white/70">+1 (555) 123-4567</span>
+                <span className="text-white/70">+91 93929 59267</span>
               </div>
               <div className="flex items-center">
                 <MapPin className="text-white/60 mr-3" size={16} />
@@ -127,7 +127,7 @@ const Footer = () => {
           className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center"
         >
           <p className="text-white/60 text-sm">
-            © 2024 E-Cell. All rights reserved.
+            © 2025 E-Cell Club, LBRCE. All rights reserved.
           </p>
           <button
             onClick={scrollToTop}

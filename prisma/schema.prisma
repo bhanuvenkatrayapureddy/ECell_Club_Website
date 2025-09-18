@@ -236,6 +236,19 @@ model ClubInfo {
   @@map("club_info")
 }
 
+// Announcements
+model Announcement {
+  id          String   @id @default(cuid())
+  title       String
+  content     String
+  isActive    Boolean  @default(true)
+  priority    Int      @default(0) // Higher number = higher priority
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("announcements")
+}
+
 // Enums
 enum UserRole {
   ADMIN
